@@ -1,0 +1,10 @@
+.next
+node_modules
+package-lock.json
+
+# Pre-existing, externally-sourced files — not owned by this project's
+# formatting config.
+.agents
+.claude
+DESIGN.md
+skills-lock.json
