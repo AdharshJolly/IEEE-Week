@@ -62,79 +62,58 @@ visible before each area is filled in.
 
 ## Design-system architecture
 
+Full visual direction: bright, editorial, light-first. White canvas, quiet
+IEEE tints, dark-blue type, saturated IEEE colours as signals.
+
 ### Token source of truth
 
-All tokens live in `app/globals.css`, using Tailwind v4's CSS-first
-`@theme` configuration — no `tailwind.config.ts`. The file has three parts:
+All tokens live in `app/globals.css` (Tailwind v4 CSS-first, no
+`tailwind.config`) in three layers:
 
-1. **Raw palette** (`:root`) — the actual IEEE brand hex values plus a
-   blue-tinted neutral scale and status colors, none of which should be
-   referenced directly from components.
-2. **Semantic tokens** (`:root`, overridden under
-   `@media (prefers-color-scheme: dark)`) — `--color-brand-*`,
-   `--color-surface-*`, `--color-content-*`, `--color-border-*`,
-   `--color-interactive-*`, `--color-status-*`, plus non-color tokens for
-   radius, elevation (shadow) and motion (duration/easing).
-3. **`@theme inline` block** — maps every semantic token into Tailwind's
-   theme namespace so ordinary utility classes are generated:
-   `bg-brand-primary`, `text-content-primary`, `border-border-focus`,
-   `rounded-lg`, `shadow-medium`, `duration-emphasis`, etc.
+1. **Brand**: official IEEE colours (`--brand-blue/dark/cyan/purple/orange/gray`)
+   plus tints (`--tint-*`, brand colour mixed with white) and inks
+   (`--ink-*`, brand colour mixed with dark blue, verified AA as text).
+2. **Semantic**: `surface-*` (default, subtle, muted, brand, accent, special,
+   highlight, elevated, deep, overlay), `content-*` (primary, secondary,
+   tertiary, muted, brand, accent, on-brand, on-accent, on-deep),
+   `line-*` (default, subtle, control, brand, on-deep), `interactive-*`,
+   `status-*`, `cat-*` (event categories). `content` and `line` replace
+   `text` and `border` to avoid Tailwind's `text-text-*` / `border-border-*`
+   utility clashes.
+3. **System**: type roles, radius hierarchy, elevation, motion, layout.
 
-Components must consume these utilities — never inline a hex value, an
-arbitrary shadow, or a raw pixel radius.
+`@theme inline` resets Tailwind's default colours, radii and shadows, so
+only tokens exist as utilities; a stray `bg-white` or `rounded-lg` does
+nothing. Components never contain hex values.
 
-**Naming note:** the semantic category the brief calls "text" is exposed as
-`--color-content-*` / `text-content-*`, not `--color-text-*`. Tailwind
-derives a utility's name from the theme key after `--color-`, so
-`--color-text-primary` would generate the confusing `text-text-primary`
-utility; `content` avoids that collision while remaining the same semantic
-category ("text color on a surface").
+There is no dark theme: the system is light-only (`color-scheme: light`).
+Navy (`surface-deep`) is a deliberate, rare contrast moment.
 
 ### Typography
 
-Two typefaces, loaded via `next/font/google` in `app/layout.tsx`:
-**Manrope** for display/heading levels, **Inter** for body/label/caption.
-Both are open-source substitutes chosen for a technical/professional tone
-appropriate to an engineering student organization — IEEE has no single
-mandated web typeface.
+`next/font/google`: **Bricolage Grotesque** (display, headings), **Geist**
+(body, UI), **Geist Mono** (metadata). No IEEE typeface guidance exists in
+this repo (`DESIGN.md` is Anthropic's system), and IEEE mandates no web
+typeface. Roles are `.type-display | hero | h1 | h2 | h3 | title | body-lg |
+body | body-sm | label | eyebrow | caption | meta` in the components layer.
 
-The type scale (display, heading-lg/md/sm, body-lg/body/body-sm, label,
-caption) is implemented as component-layer utility classes
-(`.text-display`, `.text-heading-lg`, ...) in `globals.css`, built from
-`--font-size-*` / `--leading-*` / `--tracking-*` custom properties. These
-are plain CSS classes in Tailwind's `components` layer, not Tailwind theme
-keys — that keeps them below the `utilities` layer in cascade priority, so
-a component can always override color/spacing with a normal utility class
-(e.g. `<Text className="text-status-error">`).
+### Layout
 
-### Spacing, layout, breakpoints
+`.container-page` (80rem, fluid gutter), `container-wide`, `container-narrow`;
+`<Section tone spacing>` provides full-bleed bands with fluid vertical rhythm
+(`py-section-sm|md|lg`).
 
-Spacing uses Tailwind v4's default 4px-based scale directly (`p-4` = 16px,
-`gap-6` = 24px, ...) rather than a parallel token set — duplicating a scale
-Tailwind already provides would just be another thing to keep in sync.
-Breakpoints likewise use Tailwind's defaults (`sm`/`md`/`lg`/`xl`/`2xl`).
-The one addition is `.container-page`, a component-layer class giving every
-page a centered, max-width-1280px column with responsive side gutters
-(16px → 24px → 32px); the `<Container>` component wraps it.
+### Shape, elevation, motion
 
-### Radius, elevation, motion
-
-- Radius: `--radius-sm` (6px) through `--radius-xl` (16px), plus
-  `--radius-pill` (9999px) — generates `rounded-sm` … `rounded-pill`.
-- Elevation: `--shadow-subtle` / `-medium` / `-prominent`, each redefined
-  (lower opacity, darker) under the dark-mode media query — generates
-  `shadow-subtle` / `shadow-medium` / `shadow-prominent`.
-- Motion: `--duration-fast` (120ms) / `-normal` (200ms) / `-emphasis`
-  (320ms) with a single `--ease-standard` curve — generates
-  `duration-fast` … `duration-emphasis` and `ease-standard`.
-
-### Light / dark
-
-Implemented via `@media (prefers-color-scheme: dark)` overriding the
-semantic token values on `:root` — no JS theme toggle exists yet. Because
-the semantic layer (not the raw palette) is what changes, components never
-need dark-mode-specific classes; `bg-surface`, `text-content-primary`, etc.
-resolve correctly in both themes automatically.
+- Radius: `tag` 4px, `control` 10px, `card` 18px, `panel` 32px, plus the
+  signature `.shape-leaf` crop. `rounded-full` only for avatars and dots.
+- Elevation: `rest`, `raised`, `overlay`, `float`, all tinted with dark blue.
+- Motion: durations `instant/fast/base/slow/reveal`, easings `standard` and
+  `emphasis`. Only transform and opacity animate. Load-in (`.rise-in`) and
+  scroll reveal (`.reveal`, CSS scroll-driven) are disabled under
+  `prefers-reduced-motion`.
+- Decoration: `<Decor variant>` (dots, grid, rings, fields), always masked,
+  tinted from the palette and `aria-hidden`.
 
 ## Component conventions
 
@@ -152,11 +131,9 @@ resolve correctly in both themes automatically.
 
 ## Current homepage
 
-`app/page.tsx` is a **temporary design-system validation page**, not the
-real IEEE Week homepage. It exists to prove the token architecture and
-foundation components render correctly — color palette, type hierarchy,
-buttons, badges, elevation/spacing, and responsive/dark behavior — before
-any real content or layout work begins.
+`app/page.tsx` is a placeholder. The design system is demonstrated at
+`/design-system`, a composition-only showcase (sections in
+`app/design-system/_sections`, demo data in `fixtures.ts`).
 
 ## Future MongoDB integration point
 

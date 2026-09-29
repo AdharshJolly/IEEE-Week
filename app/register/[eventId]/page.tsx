@@ -10,12 +10,12 @@ export default async function RegisterPage({
   const { eventId } = await params;
 
   return (
-    <Container as="section" className="flex flex-col gap-3 py-16">
-      <Heading as="h1" visualStyle="heading-lg">
+    <Container as="section" className="py-section-sm flex flex-col gap-3">
+      <Heading as="h1" visualStyle="h1">
         Register for event {eventId}
       </Heading>
       <Text visualStyle="body" className="text-content-secondary">
-        Registration is not implemented yet — this route is a structural
+        Registration is not implemented yet - this route is a structural
         placeholder for the foundation phase.
       </Text>
     </Container>
