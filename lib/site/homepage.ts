@@ -11,8 +11,9 @@ export async function getHomepageContent(): Promise<HomepageContent> {
     heroSummary:
       "A small, curated series of events co-organised by multiple IEEE societies at CHRIST University.",
     aboutStatement:
-      "IEEE Week is a small curated series of events co-organised by multiple IEEE societies at CHRIST University.",
-    aboutDetail: undefined,
+      "Where computing, robotics, and energy meet.",
+    aboutDetail:
+      "Every year, all IEEE societies come together for one week of intensive workshops, talks, and competitions designed to push you out of your comfort zone and into the future of technology. Whether you're here to learn, connect, or build, IEEE Week is your starting point.",
     tentativeNote:
       "Dates and details are tentative and may change. Final information will be published on each event page.",
   };

@@ -1,5 +1,6 @@
 import { Decor } from "@/components/ui/Decor";
 import { Heading } from "@/components/ui/Heading";
+import { Photo } from "@/components/ui/Photo";
 import { Section } from "@/components/ui/Section";
 import { Eyebrow, Text } from "@/components/ui/Text";
 
@@ -18,33 +19,43 @@ export function AboutSection({
     <Section
       id="about"
       tone="deep"
-      spacing="md"
+      spacing="lg"
       aria-labelledby="about-title"
-      decor={
-        <Decor
-          variant="rings-on-deep"
-          at="100% 100%"
-          className="right-0 bottom-0 h-[36rem] w-[36rem]"
-        />
-      }
+      className="overflow-hidden"
     >
-      <div className="flex max-w-4xl flex-col gap-8">
-        <Eyebrow onDeep>About IEEE Week</Eyebrow>
-        <Heading as="h2" id="about-title" visualStyle="hero" tone="deep">
-          {statement}
-        </Heading>
-        {detail && (
-          <Text
-            visualStyle="body-lg"
-            tone="on-deep-secondary"
-            className="max-w-2xl"
-          >
-            {detail}
+      <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
+        <div className="flex flex-col gap-6 lg:order-2">
+          <Eyebrow onDeep>About IEEE Week</Eyebrow>
+          <Heading as="h2" id="about-title" visualStyle="h1" tone="deep">
+            {statement}
+          </Heading>
+          {detail && (
+            <Text
+              visualStyle="body-lg"
+              tone="on-deep-secondary"
+            >
+              {detail}
+            </Text>
+          )}
+          <Text visualStyle="label" tone="on-deep-secondary" className="mt-4">
+            Presented by {organization}
           </Text>
-        )}
-        <Text visualStyle="label" tone="on-deep-secondary">
-          Presented by {organization}
-        </Text>
+        </div>
+        
+        <div className="lg:order-1 relative isolate">
+          <Decor
+            variant="rings-on-deep"
+            at="50% 50%"
+            className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[150%] w-[150%] max-w-none pointer-events-none -z-10"
+          />
+          <Photo 
+            aspect="4/5" 
+            shape="leaf" 
+            tone="cyan"
+            placeholderLabel="Community & Collaboration" 
+            className="relative z-10 w-full max-w-sm mx-auto shadow-float" 
+          />
+        </div>
       </div>
     </Section>
   );
