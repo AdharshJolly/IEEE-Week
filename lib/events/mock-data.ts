@@ -69,6 +69,8 @@ export const mockEvents: EventSummary[] = [
     startDate: "2026-11-11",
     societyIds: ["cis", "vts", "ras"],
     tentative: true,
+    category: "social",
+    registrationState: "open",
     speakers: [
       {
         name: "Dr. Alice Turing",
@@ -88,6 +90,8 @@ export const mockEvents: EventSummary[] = [
     startDate: "2026-11-12",
     societyIds: ["cis"],
     tentative: true,
+    category: "workshop",
+    registrationState: "limited",
   },
   {
     slug: "agent-forge",
@@ -96,6 +100,8 @@ export const mockEvents: EventSummary[] = [
     endDate: "2026-11-14",
     societyIds: ["cs", "sb"],
     tentative: true,
+    category: "competition",
+    registrationState: "open",
   },
   {
     slug: "aerospace-geo-sensing-workshop",
@@ -103,6 +109,8 @@ export const mockEvents: EventSummary[] = [
     startDate: "2026-11-16",
     societyIds: ["grss", "aess"],
     tentative: true,
+    category: "workshop",
+    registrationState: "open",
   },
   {
     slug: "ai-antenna-design-workshop",
@@ -111,5 +119,7 @@ export const mockEvents: EventSummary[] = [
     endDate: "2026-11-18",
     societyIds: ["aps", "mtts"],
     tentative: true,
+    category: "workshop",
+    registrationState: "open",
   },
 ];

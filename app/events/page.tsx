@@ -52,6 +52,8 @@ export default async function EventsPage() {
       societyNames: event.societies.map((society) => society.name),
       statusLabel: eventStatusLabel(event.tentative),
       tentative: event.tentative,
+      category: event.category,
+      registrationState: event.registrationState,
     };
   });
 
@@ -102,19 +104,14 @@ export default async function EventsPage() {
         )}
 
         <Section spacing="md" aria-labelledby="listing-title">
-          <div className="grid gap-12 lg:grid-cols-12 lg:gap-x-10">
-            <div className="lg:sticky lg:top-28 lg:col-span-4 lg:self-start">
-              <SectionHeading
-                id="listing-title"
-                eyebrow="All events"
-                title="In date order."
-                description="Explore the rest of the events in our schedule."
-              />
-            </div>
-            <div className="lg:col-span-8">
-              <EventListing items={remainingItems} />
-            </div>
-          </div>
+          <SectionHeading
+            id="listing-title"
+            eyebrow="All events"
+            title="Choose your track."
+            description="Explore our massive schedule of events below."
+            className="mb-10 text-center mx-auto"
+          />
+          <EventListing items={remainingItems} />
         </Section>
         <FinalCta
           year={content.year}

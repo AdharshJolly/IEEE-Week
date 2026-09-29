@@ -46,6 +46,10 @@ export interface EventSummary {
   societyIds: string[];
   /** Whether the schedule details are still subject to change. */
   tentative: boolean;
+  /** Type of event. */
+  category?: EventCategory;
+  /** Registration availability status. */
+  registrationState?: RegistrationState;
   /** Omit until official copy is provided; the page then skips the section. */
   description?: string;
   /** Optional facts such as venue or fee; omit until provided. */
