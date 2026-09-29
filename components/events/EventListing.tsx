@@ -101,7 +101,7 @@ export function EventListing({ items }: EventListingProps) {
       </div>
 
       {/* Bento Grid */}
-      <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 auto-rows-[22rem] gap-4 sm:gap-6">
         <AnimatePresence mode="popLayout">
           {filteredItems.map((item, i) => (
             <motion.div
@@ -112,43 +112,46 @@ export function EventListing({ items }: EventListingProps) {
               exit={{ opacity: 0, scale: 0.9 }}
               transition={{ duration: 0.3, type: "spring", bounce: 0.2 }}
               className={cn(
-                "group relative overflow-hidden rounded-[2rem] border border-line bg-surface-elevated p-1 transition-all hover:border-brand-blue/30 hover:shadow-glow",
+                "group relative overflow-hidden rounded-[2rem] border border-white/10 bg-surface-deep transition-all hover:border-brand-blue/50 hover:shadow-glow",
                 // Make the first item span two columns on desktop if it's the "All" view
-                i === 0 && activeCategory === "all" ? "md:col-span-2" : ""
+                i === 0 && activeCategory === "all" ? "md:col-span-2" : "col-span-1"
               )}
             >
-              <Link href={item.href} className="flex h-full flex-col outline-none">
-                <div className="relative h-48 sm:h-56 w-full overflow-hidden rounded-[1.75rem]">
+              <Link href={item.href} className="absolute inset-0 flex flex-col outline-none">
+                {/* Full-bleed Background Image */}
+                <div className="absolute inset-0 z-0">
                   <Photo
                     tone={i % 2 === 0 ? "blue" : "cyan"}
                     treatment="brand"
                     className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                     placeholderLabel={PHOTO_LABELS[i % PHOTO_LABELS.length]}
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-surface-brand/90 via-surface-brand/20 to-transparent" />
-                  
-                  {/* Badges Overlay */}
-                  <div className="absolute top-4 right-4 flex gap-2">
-                    {item.category && (
-                      <div className="inline-flex items-center px-2.5 py-1 rounded-full bg-surface-brand/60 border border-white/10 text-white text-xs font-medium backdrop-blur-md capitalize">
-                        {item.category}
-                      </div>
-                    )}
-                  </div>
+                  {/* Heavy gradient to make text readable */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-surface-deep/95 via-surface-deep/60 to-transparent" />
+                </div>
+                
+                {/* Badges Overlay (Top) */}
+                <div className="absolute top-5 right-5 z-20 flex gap-2">
+                  {item.category && (
+                    <div className="inline-flex items-center px-3 py-1.5 rounded-full bg-white/10 border border-white/20 text-white text-xs font-semibold backdrop-blur-md capitalize shadow-sm">
+                      {item.category}
+                    </div>
+                  )}
                 </div>
 
-                <div className="relative flex flex-1 flex-col p-6 -mt-16 z-10">
+                {/* Content Overlay (Bottom) */}
+                <div className="relative z-10 flex flex-1 flex-col justify-end p-6 sm:p-8">
                   <div className="mb-4">
                     <RegistrationBadge state={item.registrationState} />
                   </div>
                   
-                  <h3 className="type-h3 text-balance mb-2 group-hover:text-content-brand transition-colors">
+                  <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white text-balance mb-3 group-hover:text-brand-cyan transition-colors">
                     {item.title}
                   </h3>
                   
-                  <div className="flex items-center gap-2 text-content-secondary text-sm font-medium mt-auto pt-6">
-                    <span>{item.dateLabel}</span>
-                    <span className="w-1 h-1 rounded-full bg-line" />
+                  <div className="flex items-center gap-3 text-white/70 text-sm font-medium">
+                    <span className="bg-white/10 px-2.5 py-1 rounded-md backdrop-blur-sm border border-white/10">{item.dateLabel}</span>
+                    <span className="w-1 h-1 rounded-full bg-white/30" />
                     <span className="truncate">{item.societyNames.join(", ")}</span>
                   </div>
                 </div>
