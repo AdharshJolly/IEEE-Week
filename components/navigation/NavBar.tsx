@@ -2,7 +2,6 @@ import Link from "next/link";
 import { type ReactNode } from "react";
 import { Button } from "@/components/ui/Button";
 import { cn } from "@/lib/utils";
-import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { NavMobileMenu } from "./NavMobileMenu";
 
 export interface NavLink {
@@ -89,7 +88,6 @@ export function NavBar({
           </nav>
 
           <div className="ml-auto flex items-center gap-2 lg:ml-0">
-            <ThemeToggle />
             {actions}
             {cta && (
               <Button href={cta.href} size="sm" arrow className="max-lg:hidden">
