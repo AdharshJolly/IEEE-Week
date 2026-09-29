@@ -22,14 +22,33 @@ const geistMono = Geist_Mono({
 
 
 export const metadata: Metadata = {
-  title: "IEEE Week",
+  metadataBase: new URL(process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000"),
+  title: {
+    template: "%s | IEEE Week",
+    default: "IEEE Week | CHRIST University Student Branch",
+  },
   description:
     "Official website for IEEE Week, the multi-society event series hosted by the IEEE CHRIST University Student Branch Chapter.",
+  openGraph: {
+    title: "IEEE Week | CHRIST University",
+    description: "Official website for IEEE Week, the multi-society event series hosted by the IEEE CHRIST University Student Branch Chapter.",
+    siteName: "IEEE Week",
+    locale: "en_IN",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "IEEE Week | CHRIST University",
+    description: "Join the multi-society flagship event series by IEEE CHRIST University.",
+  },
+  keywords: ["IEEE", "CHRIST University", "Engineering", "Technology", "Events", "Student Branch"],
 };
 
 export const viewport: Viewport = {
   themeColor: "#ffffff",
 };
+
+import { TransitionLayout } from "@/components/ui/TransitionLayout";
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -39,7 +58,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${bricolage.variable} ${geist.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col">
-        {children}
+        <TransitionLayout>
+          {children}
+        </TransitionLayout>
       </body>
     </html>
   );
