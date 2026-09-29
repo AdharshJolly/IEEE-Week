@@ -75,6 +75,7 @@ export default async function Home() {
           year={content.year}
           summary={content.heroSummary}
           dateRange={range?.label}
+          firstEventDate={first ? `${first}T09:00:00Z` : undefined}
           eventCount={events.length}
           tentative={anyTentative}
         />

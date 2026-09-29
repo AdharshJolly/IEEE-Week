@@ -1,6 +1,7 @@
 import { CalendarDays } from "lucide-react";
 import { type CSSProperties } from "react";
 import { Button } from "@/components/ui/Button";
+import { CountdownTimer } from "@/components/ui/CountdownTimer";
 import { Decor } from "@/components/ui/Decor";
 import { Heading } from "@/components/ui/Heading";
 import { Photo } from "@/components/ui/Photo";
@@ -13,6 +14,8 @@ export interface HomeHeroProps {
   summary: string;
   /** Shown in the floating card, e.g. "11 Nov – 18 Nov". */
   dateRange?: string;
+  /** ISO date string for the countdown timer. */
+  firstEventDate?: string;
   eventCount?: number;
   tentative?: boolean;
 }
@@ -22,6 +25,7 @@ export function HomeHero({
   year,
   summary,
   dateRange,
+  firstEventDate,
   eventCount,
   tentative,
 }: HomeHeroProps) {
@@ -78,6 +82,18 @@ export function HomeHero({
               View Schedule
             </Button>
           </div>
+          
+          {firstEventDate && (
+            <div 
+              className="rise-in mt-6"
+              style={{ "--i": 4 } as CSSProperties}
+            >
+              <Text visualStyle="eyebrow" tone="secondary" className="mb-3 block">
+                Countdown to kickoff
+              </Text>
+              <CountdownTimer targetDate={firstEventDate} />
+            </div>
+          )}
         </div>
 
         <div
