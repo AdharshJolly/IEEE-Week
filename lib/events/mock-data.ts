@@ -71,6 +71,7 @@ export const mockEvents: EventSummary[] = [
     tentative: true,
     category: "social",
     registrationState: "open",
+    registrationsCount: 250,
     speakers: [
       {
         name: "Dr. Alice Turing",
@@ -92,6 +93,7 @@ export const mockEvents: EventSummary[] = [
     tentative: true,
     category: "workshop",
     registrationState: "limited",
+    registrationsCount: 420,
   },
   {
     slug: "agent-forge",
@@ -102,6 +104,7 @@ export const mockEvents: EventSummary[] = [
     tentative: true,
     category: "competition",
     registrationState: "open",
+    registrationsCount: 850,
   },
   {
     slug: "aerospace-geo-sensing-workshop",
@@ -111,6 +114,7 @@ export const mockEvents: EventSummary[] = [
     tentative: true,
     category: "workshop",
     registrationState: "open",
+    registrationsCount: 120,
   },
   {
     slug: "ai-antenna-design-workshop",
@@ -121,5 +125,6 @@ export const mockEvents: EventSummary[] = [
     tentative: true,
     category: "workshop",
     registrationState: "open",
+    registrationsCount: 95,
   },
 ];

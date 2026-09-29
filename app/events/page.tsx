@@ -57,12 +57,13 @@ export default async function EventsPage() {
     };
   });
 
-  const first = events[0];
-  const firstDate = first ? formatDateRange(first.startDate, first.endDate) : null;
+  // Find the event with the highest registrationsCount
+  const featured = [...events].sort((a, b) => (b.registrationsCount || 0) - (a.registrationsCount || 0))[0];
+  const featuredDate = featured ? formatDateRange(featured.startDate, featured.endDate) : null;
   const links = getNavLinks("/events");
 
-  // Filter out the first event from the listing if we display it as featured
-  const remainingItems = items.slice(1);
+  // Filter out the featured event from the listing if we display it as featured
+  const remainingItems = items.filter((item) => item.id !== featured?.slug);
 
   return (
     <>
@@ -84,20 +85,20 @@ export default async function EventsPage() {
           ]}
         />
         
-        {first && firstDate && (
+        {featured && featuredDate && (
           <Section spacing="md">
             <SectionHeading
               id="featured-event-title"
-              eyebrow="Up Next"
+              eyebrow="Trending Now"
               title="Featured Event"
-              description="Don't miss our opening event."
+              description="Our most popular event with the highest registrations."
               className="mb-8"
             />
             <FeaturedEventCard
-              title={first.title}
-              date={firstDate.label}
-              society={first.societies.map((s) => s.short).join(" & ")}
-              href={`/events/${first.slug}`}
+              title={featured.title}
+              date={featuredDate.label}
+              society={featured.societies.map((s) => s.short).join(" & ")}
+              href={`/events/${featured.slug}`}
               layout="split"
             />
           </Section>
@@ -117,8 +118,8 @@ export default async function EventsPage() {
           year={content.year}
           note={note}
           primary={
-            first
-              ? { label: "See the first event", href: `/events/${first.slug}` }
+            featured
+              ? { label: "See featured event", href: `/events/${featured.slug}` }
               : { label: "Back to home", href: "/" }
           }
           secondary={{ label: "Back to home", href: "/" }}

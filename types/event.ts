@@ -50,6 +50,8 @@ export interface EventSummary {
   category?: EventCategory;
   /** Registration availability status. */
   registrationState?: RegistrationState;
+  /** The current number of registrations for this event. */
+  registrationsCount?: number;
   /** Omit until official copy is provided; the page then skips the section. */
   description?: string;
   /** Optional facts such as venue or fee; omit until provided. */
