@@ -14,7 +14,7 @@ import { getNavLinks } from "@/lib/site/navigation";
 import { SERIES_NAME } from "@/lib/site/config";
 
 export const metadata: Metadata = {
-  title: `Contact | ${SERIES_NAME}`,
+  title: "Contact",
   description: "Get in touch with the IEEE CHRIST University Student Branch Chapter.",
 };
 

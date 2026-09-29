@@ -1,10 +1,7 @@
-import {
-  RuleDraw,
-  Stagger,
-  StaggerItem,
-} from "@/components/motion/Reveal";
+import { Reveal, RuleDraw } from "@/components/motion/Reveal";
 import { SocietyCard } from "@/components/events/SocietyCard";
 import { Section } from "@/components/ui/Section";
+import { stagger } from "@/lib/motion/tokens";
 import { SectionHeading } from "./SectionHeading";
 
 export interface SocietiesSectionItem {
@@ -22,9 +19,15 @@ export interface SocietiesSectionProps {
   layout?: "grid" | "list";
 }
 
-export function SocietiesSection({ societies, layout = "grid" }: SocietiesSectionProps) {
+/** Grid columns at the widest breakpoint; sets the reveal stagger period. */
+const COLUMNS = 3;
+
+export function SocietiesSection({
+  societies,
+  layout = "grid",
+}: SocietiesSectionProps) {
   const isList = layout === "list";
-  
+
   return (
     <Section id="societies" spacing="md" aria-labelledby="societies-title">
       <div className="flex flex-col gap-12">
@@ -33,9 +36,7 @@ export function SocietiesSection({ societies, layout = "grid" }: SocietiesSectio
           eyebrow="Participating societies"
           title="Co-organised across IEEE."
         />
-        <Stagger
-          as="ul"
-          gap="tight"
+        <ul
           className={
             isList
               ? "m-0 flex list-none flex-col gap-6 p-0"
@@ -43,10 +44,11 @@ export function SocietiesSection({ societies, layout = "grid" }: SocietiesSectio
           }
         >
           {societies.map((society, index) => (
-            <StaggerItem
+            <Reveal
               as="li"
               key={society.id}
               direction="left"
+              delay={isList ? 0 : (index % COLUMNS) * stagger.base}
               className="m-0 flex flex-col gap-3"
             >
               <div aria-hidden="true" className="flex items-center gap-3">
@@ -63,9 +65,9 @@ export function SocietiesSection({ societies, layout = "grid" }: SocietiesSectio
                 layout={isList ? "horizontal" : "vertical"}
                 className="w-full flex-1"
               />
-            </StaggerItem>
+            </Reveal>
           ))}
-        </Stagger>
+        </ul>
       </div>
     </Section>
   );

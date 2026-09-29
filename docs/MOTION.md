@@ -49,17 +49,18 @@ and passes content as children.
 
 ## Usage by component
 
-| Component                                                      | Primitives                                                                   |
-| -------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| `HomeHero`                                                     | `MaskedText`, `Reveal`, `Stagger`, `SignalField` (ambient), `Decor`          |
-| `EventDetailHero`                                              | `MaskedText`, `Reveal`, `Stagger`, `SignalField`, `Decor`                    |
-| `EventDateTimeline` (home "Upcoming highlights")               | `TimelineItem`, `TimelineSpineFill`, `TimelineSlide`                         |
-| `SocietiesSection` (about page)                                | `Stagger`, `StaggerItem`, `RuleDraw` (indexed rows, staggered from the left) |
-| `Card` with `href` (event/society cards), `EventListing` cards | `SpotlightLayer`; `.magnetic` on the card arrow / listing text block         |
-| `EventRegistrationCta`, `FinalCta`                             | `Reveal`, `SignalTrail`                                                      |
-| `SectionHeading`                                               | `Reveal`                                                                     |
-| `app/template.tsx`                                             | `PageTransition` (opacity fade + one top-edge signal trace)                  |
-| `Decor`                                                        | scroll parallax from tokens                                                  |
+| Component                                                      | Primitives                                                                                                                                                 |
+| -------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `HomeHero`                                                     | `MaskedText`, `Reveal`, `Stagger`, `SignalField` (ambient), `Decor`                                                                                        |
+| `EventDetailHero`                                              | `MaskedText`, `Reveal`, `Stagger`, `SignalField`, `Decor`                                                                                                  |
+| `EventDateTimeline` (home "Upcoming highlights")               | `TimelineItem`, `TimelineSpineFill`, `TimelineSlide`                                                                                                       |
+| `SocietiesSection` (about page)                                | Per-item `Reveal` from the left (column-staggered in grid layout) and `RuleDraw` index rules; each item triggers on its own so tall lists reveal correctly |
+| `Card` with `href` (event/society cards), `EventListing` cards | `SpotlightLayer`; `.magnetic` on the card arrow / listing text block                                                                                       |
+| `FinalCta` (home, events, about)                               | `Reveal`, `SignalTrail`                                                                                                                                    |
+| `EventRegistrationCta`                                         | `Reveal`, `SignalTrail`. Currently not rendered anywhere; the event page uses the registration card in `EventDetailBody`, which has no motion              |
+| `SectionHeading`                                               | `Reveal`                                                                                                                                                   |
+| `app/template.tsx`                                             | `PageTransition` (opacity fade + one top-edge signal trace)                                                                                                |
+| `Decor`                                                        | scroll parallax from tokens                                                                                                                                |
 
 ## Reduced motion
 
@@ -87,4 +88,5 @@ overflow, clipping or layout shift. Those names are test inputs only.
 - The page transition is enter-only (no exit animation) so navigation is never delayed.
 - No loading screen exists, so none was added. Route feedback is the top-edge signal.
 - Hero content is hidden until hydration (as the previous page transition already was).
-- `.rise-in` / `.reveal` CSS utilities remain on pages not yet moved to the primitives (about, contact, events index, etc.).
+- `.rise-in` / `.reveal` CSS utilities are still required and stay in `globals.css`: they drive the about, contact and events-index heroes, `EventHero`, `EventTimeline`, `NavMobileMenu` and the design-system showcase. They use the same duration and ease tokens and are disabled under reduced motion. Move a page to the primitives only when it is being redesigned.
+- `Reveal` uses an in-view threshold of 20% of the element, so never wrap a container taller than about five viewports; reveal its items individually instead.

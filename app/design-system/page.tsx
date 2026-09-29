@@ -15,12 +15,13 @@ import { ImagerySection } from "./_sections/ImagerySection";
 import { ScheduleSection } from "./_sections/ScheduleSection";
 import { StatesSection } from "./_sections/StatesSection";
 import { SystemSection } from "./_sections/SystemSection";
+import { SERIES_NAME } from "@/lib/site/config";
 import { TypographySection } from "./_sections/TypographySection";
 
 export const metadata: Metadata = {
-  title: "Design System | IEEE Week",
+  title: "Design System",
   description:
-    "The IEEE Week visual system: colour, type, imagery, components and states.",
+    `The ${SERIES_NAME} visual system: colour, type, imagery, components and states.`,
 };
 
 /**
@@ -78,7 +79,7 @@ export default function DesignSystemPage() {
       >
         <div className="container-page border-line-on-deep flex flex-col gap-3 border-t py-8 sm:flex-row sm:items-center sm:justify-between">
           <p className="type-body-sm text-content-on-deep-secondary">
-            IEEE Week is organised by the university IEEE Student Branch.
+            {SERIES_NAME} is organised by the university IEEE Student Branch.
           </p>
           <Link
             href="/"

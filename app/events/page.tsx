@@ -21,7 +21,7 @@ import { getNavLinks } from "@/lib/site/navigation";
 import { SERIES_NAME } from "@/lib/site/config";
 
 export const metadata: Metadata = {
-  title: `Events | ${SERIES_NAME}`,
+  title: "Events",
   description:
     `Every ${SERIES_NAME} event in date order, with the societies organising each one.`,
 };

@@ -8,6 +8,7 @@ import { Section } from "@/components/ui/Section";
 import { StatCard } from "@/components/ui/StatCard";
 import { Eyebrow, Text } from "@/components/ui/Text";
 import { CategoryTag } from "@/components/events/CategoryTag";
+import { SERIES_NAME } from "@/lib/site/config";
 import { standIn } from "../fixtures";
 
 export function HeroSection() {
@@ -35,7 +36,7 @@ export function HeroSection() {
         <div className="grid items-center gap-x-10 gap-y-12 lg:grid-cols-12">
           <div className="flex flex-col gap-7 lg:col-span-7">
             <Eyebrow className="rise-in">
-              IEEE Week 2026 design language
+              {SERIES_NAME} 2026 design language
             </Eyebrow>
             <Heading
               as="h1"

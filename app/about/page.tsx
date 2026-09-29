@@ -17,7 +17,7 @@ import { getNavLinks } from "@/lib/site/navigation";
 import { SERIES_NAME } from "@/lib/site/config";
 
 export const metadata: Metadata = {
-  title: `About | ${SERIES_NAME}`,
+  title: "About",
   description:
     `Learn about CHRIST University and the IEEE societies organizing ${SERIES_NAME}.`,
 };
