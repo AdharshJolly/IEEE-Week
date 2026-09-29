@@ -69,6 +69,18 @@ export const mockEvents: EventSummary[] = [
     startDate: "2026-11-11",
     societyIds: ["cis", "vts", "ras"],
     tentative: true,
+    speakers: [
+      {
+        name: "Dr. Alice Turing",
+        role: "Keynote Speaker",
+        avatarUrl: "https://i.pravatar.cc/150?u=alice",
+      },
+      {
+        name: "Bob Builder",
+        role: "Ideathon Lead",
+        avatarUrl: "https://i.pravatar.cc/150?u=bob",
+      }
+    ]
   },
   {
     slug: "cis-llm-genai-workshop",

@@ -619,3 +619,18 @@
     animation: none;
   }
 }
+
+.dark {
+  --color-surface-default: var(--brand-dark);
+  --color-surface-elevated: #001f44;
+  --color-surface-subtle: #003670;
+  --color-surface-muted: #00458f;
+  
+  --color-content-primary: var(--brand-white);
+  --color-content-secondary: var(--tint-blue-12);
+  --color-content-tertiary: var(--tint-blue-20);
+  
+  --color-line: #003670;
+  
+  --tint-cyan-20: color-mix(in srgb, var(--brand-cyan) 30%, transparent);
+}

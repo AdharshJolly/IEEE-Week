@@ -55,10 +55,12 @@ export function AboutSection({
             className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[150%] w-[150%] max-w-none pointer-events-none -z-10"
           />
           <Photo 
+            src="https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?auto=format&fit=crop&q=80&w=800"
+            alt="Students collaborating"
             aspect="4/5" 
             shape="leaf" 
             tone="cyan"
-            placeholderLabel="Community & Collaboration" 
+            treatment="brand"
             className="relative z-10 w-full max-w-sm mx-auto shadow-float" 
           />
         </div>

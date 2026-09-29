@@ -1,4 +1,7 @@
-import { type CSSProperties } from "react";
+"use client";
+
+import { type CSSProperties, useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 export type DecorVariant =
@@ -32,15 +35,28 @@ export interface DecorProps {
  * masked so it fades out before it can compete with content.
  */
 export function Decor({ variant, at, className }: DecorProps) {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+  
+  // Subtle parallax effect
+  const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
+
   return (
-    <div
+    <motion.div
+      ref={ref}
       aria-hidden="true"
+      style={{
+        y,
+        ...(at ? { "--ring-at": at } as CSSProperties : {}),
+      }}
       className={cn(
         "pointer-events-none absolute -z-10",
         variantStyles[variant],
         className,
       )}
-      style={at ? ({ "--ring-at": at } as CSSProperties) : undefined}
     />
   );
 }

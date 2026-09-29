@@ -113,10 +113,12 @@ export default async function AboutPage() {
                 className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[130%] w-[130%] max-w-none pointer-events-none -z-10"
               />
               <Photo 
+                src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&q=80&w=1200"
+                alt="CHRIST University Campus"
                 aspect="4/3" 
                 shape="card" 
                 tone="blue"
-                placeholderLabel="CHRIST University Campus" 
+                treatment="brand"
                 className="relative z-10 w-full shadow-float" 
               />
             </div>

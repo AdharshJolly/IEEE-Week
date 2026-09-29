@@ -50,6 +50,8 @@ export interface EventSummary {
   description?: string;
   /** Optional facts such as venue or fee; omit until provided. */
   details?: EventDetail[];
+  /** Optional speakers list; omit until provided. */
+  speakers?: { name: string; role: string; avatarUrl: string }[];
   /** Optional session list; omit until provided. */
   schedule?: EventScheduleItem[];
   /** External registration link; omit until registration is announced. */

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { EventDetailBody } from "@/components/events/EventDetailBody";
 import { EventDetailHero } from "@/components/events/EventDetailHero";
-import { EventRegistrationCta } from "@/components/events/EventRegistrationCta";
 import { RelatedEvents } from "@/components/events/RelatedEvents";
 import { NavBar } from "@/components/navigation/NavBar";
 import { SiteFooter } from "@/components/navigation/SiteFooter";
@@ -70,10 +69,9 @@ export default async function EventDetailPage({
           description={event.description}
           details={event.details}
           schedule={event.schedule}
-        />
-        <EventRegistrationCta
-          eventTitle={event.title}
+          speakers={event.speakers}
           registrationUrl={event.registrationUrl}
+          eventTitle={event.title}
         />
         <RelatedEvents
           items={related.map((item) => ({
