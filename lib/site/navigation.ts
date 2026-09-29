@@ -7,6 +7,7 @@ export function getNavLinks(activeHref?: string): NavLink[] {
     { label: "Schedule", href: "/#schedule" },
     { label: "About", href: "/about" },
     { label: "Societies", href: "/about#societies" },
+    { label: "Contact", href: "/contact" },
   ];
   return links.map((link) => ({ ...link, active: link.href === activeHref }));
 }
