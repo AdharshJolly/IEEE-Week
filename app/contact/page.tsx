@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { type CSSProperties } from "react";
-import { Mail, Handshake, Ticket, MapPin, ExternalLink } from "lucide-react";
+import { Mail, MapPin, ExternalLink, User, GraduationCap } from "lucide-react";
 import { NavBar } from "@/components/navigation/NavBar";
 import { SiteFooter } from "@/components/navigation/SiteFooter";
 import { SectionHeading } from "@/components/sections/SectionHeading";
@@ -21,27 +21,29 @@ export default async function ContactPage() {
   const content = await getHomepageContent();
   const links = getNavLinks("/contact");
 
-  const contactMethods = [
+  const primaryEmail = "ieee@christuniversity.in";
+
+  const coordinators = [
     {
-      title: "General Inquiries",
-      description: "Have a general question about IEEE Week? Drop us a line.",
-      icon: <Mail className="size-6 text-content-brand" strokeWidth={1.5} />,
-      action: "hello@ieeechrist.com",
-      href: "mailto:hello@ieeechrist.com"
+      role: "Faculty Coordinator",
+      name: "Dr. Smith",
+      description: "Faculty Sponsor & Advisor",
+      icon: <GraduationCap className="size-6 text-content-brand" strokeWidth={1.5} />,
+      email: primaryEmail
     },
     {
-      title: "Sponsorship & Partnerships",
-      description: "Interested in sponsoring our events or partnering with us?",
-      icon: <Handshake className="size-6 text-content-brand" strokeWidth={1.5} />,
-      action: "sponsor@ieeechrist.com",
-      href: "mailto:sponsor@ieeechrist.com"
+      role: "Student Coordinator",
+      name: "Alice",
+      description: "Chairperson, IEEE SB",
+      icon: <User className="size-6 text-content-brand" strokeWidth={1.5} />,
+      email: primaryEmail
     },
     {
-      title: "Registration Support",
-      description: "Having trouble registering for a specific track or event?",
-      icon: <Ticket className="size-6 text-content-brand" strokeWidth={1.5} />,
-      action: "support@ieeechrist.com",
-      href: "mailto:support@ieeechrist.com"
+      role: "Student Coordinator",
+      name: "Bob",
+      description: "Vice-Chairperson, IEEE SB",
+      icon: <User className="size-6 text-content-brand" strokeWidth={1.5} />,
+      email: primaryEmail
     }
   ];
 
@@ -93,28 +95,64 @@ export default async function ContactPage() {
           </div>
         </Section>
 
-        {/* Contact Cards Section */}
+        {/* Coordinators Section */}
         <Section spacing="md">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {contactMethods.map((method, i) => (
-              <Card
-                key={method.title}
-                as="article"
-                href={method.href}
-                className="flex flex-col gap-4 p-8 group rise-in"
-                style={{ "--i": i + 2 } as CSSProperties}
-              >
-                <div className="size-12 rounded-full bg-surface-brand/10 flex items-center justify-center mb-2">
-                  {method.icon}
-                </div>
-                <h3 className="type-title">{method.title}</h3>
-                <p className="type-body text-content-secondary flex-1">{method.description}</p>
-                <div className="flex items-center gap-2 mt-4 text-content-brand font-medium group-hover:translate-x-1 transition-transform">
-                  <span>{method.action}</span>
-                  <ExternalLink className="size-4" />
-                </div>
-              </Card>
-            ))}
+          <div className="flex flex-col gap-10 max-w-5xl mx-auto">
+            {/* Primary Contact Banner */}
+            <Card
+              as="article"
+              href={`mailto:${primaryEmail}`}
+              tone="solid"
+              className="flex flex-col sm:flex-row items-center gap-6 p-8 sm:p-10 text-center sm:text-left group rise-in"
+              style={{ "--i": 2 } as CSSProperties}
+            >
+              <div className="size-16 rounded-full bg-surface-brand/10 flex items-center justify-center shrink-0">
+                <Mail className="size-8 text-content-brand" strokeWidth={1.5} />
+              </div>
+              <div className="flex flex-col gap-2 flex-1">
+                <h3 className="type-title">Primary Email</h3>
+                <p className="type-body text-content-secondary">
+                  For all general inquiries, sponsorships, and registration support, please reach out to our official branch email.
+                </p>
+              </div>
+              <div className="flex items-center gap-2 text-content-brand font-medium group-hover:translate-x-1 transition-transform whitespace-nowrap mt-4 sm:mt-0">
+                <span className="text-lg">{primaryEmail}</span>
+                <ExternalLink className="size-5" />
+              </div>
+            </Card>
+
+            <SectionHeading
+              id="coordinators-title"
+              eyebrow="Leadership"
+              title="Our Coordinators"
+              className="text-center mx-auto mt-6"
+            />
+
+            {/* Coordinators Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {coordinators.map((person, i) => (
+                <Card
+                  key={person.name}
+                  as="article"
+                  href={`mailto:${person.email}`}
+                  className="flex flex-col gap-4 p-8 group rise-in"
+                  style={{ "--i": i + 3 } as CSSProperties}
+                >
+                  <div className="size-12 rounded-full bg-surface-brand/10 flex items-center justify-center mb-2">
+                    {person.icon}
+                  </div>
+                  <div className="flex flex-col">
+                    <span className="type-eyebrow text-content-brand mb-2">{person.role}</span>
+                    <h3 className="type-title">{person.name}</h3>
+                  </div>
+                  <p className="type-body text-content-secondary flex-1">{person.description}</p>
+                  <div className="flex items-center gap-2 mt-4 text-content-primary font-medium group-hover:text-content-brand transition-colors">
+                    <Mail className="size-4 opacity-70" />
+                    <span className="text-sm">Contact</span>
+                  </div>
+                </Card>
+              ))}
+            </div>
           </div>
         </Section>
 
