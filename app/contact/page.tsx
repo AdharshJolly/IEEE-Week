@@ -174,7 +174,7 @@ export default async function ContactPage() {
                 allowFullScreen={true}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
-                className="absolute inset-0 grayscale contrast-125 opacity-90 mix-blend-multiply"
+                className="absolute inset-0"
               />
             </div>
           </div>
