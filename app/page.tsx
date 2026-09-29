@@ -47,7 +47,7 @@ export default async function Home() {
     usedSocietyIds.has(society.id),
   );
 
-  const timelineItems = events.map((event) => {
+  const timelineItems = events.slice(0, 3).map((event) => {
     const date = formatDateRange(event.startDate, event.endDate);
     return {
       id: event.slug,

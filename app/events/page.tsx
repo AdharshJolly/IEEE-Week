@@ -9,7 +9,6 @@ import { SiteFooter } from "@/components/navigation/SiteFooter";
 import { EventsHero } from "@/components/sections/EventsHero";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { SectionHeading } from "@/components/sections/SectionHeading";
-import { SocietiesSection } from "@/components/sections/SocietiesSection";
 import { Section } from "@/components/ui/Section";
 import { getEvents, getSocieties } from "@/lib/events";
 import {
@@ -55,13 +54,6 @@ export default async function EventsPage() {
       tentative: event.tentative,
     };
   });
-
-  const societyItems = activeSocieties.map((society) => ({
-    id: society.id,
-    name: society.name,
-    short: society.short,
-    logo: society.logo,
-  }));
 
   const first = events[0];
   const firstDate = first ? formatDateRange(first.startDate, first.endDate) : null;
@@ -130,7 +122,6 @@ export default async function EventsPage() {
             </div>
           </div>
         </Section>
-        <SocietiesSection societies={societyItems} />
         <FinalCta
           year={content.year}
           note={note}

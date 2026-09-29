@@ -17,16 +17,16 @@ export function EventTimelineSection({ items }: EventTimelineSectionProps) {
         <div className="flex flex-col items-start gap-8 lg:sticky lg:top-28 lg:col-span-4 lg:self-start">
           <SectionHeading
             id="schedule-title"
-            eyebrow="Event timeline"
-            title="What happens, and when."
-            description="The current plan, in date order. Open any event for its dedicated page."
+            eyebrow="Sneak peek"
+            title="Upcoming highlights."
+            description="A glimpse of what's happening. Explore the full schedule for more."
           />
           <Button href="/events" variant="outline" arrow>
-            All events
+            See all events
           </Button>
         </div>
         <div className="lg:col-span-8">
-          <EventDateTimeline items={items} label="IEEE Week events by date" />
+          <EventDateTimeline items={items} label="Upcoming IEEE Week events" />
         </div>
       </div>
     </Section>
