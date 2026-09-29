@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { type CSSProperties } from "react";
 import { NavBar } from "@/components/navigation/NavBar";
 import { SiteFooter } from "@/components/navigation/SiteFooter";
@@ -87,6 +88,15 @@ export default async function AboutPage() {
         <Section spacing="md" id="university" aria-labelledby="university-title">
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
             <div className="flex flex-col gap-6 lg:order-1">
+              <div className="relative h-16 w-32 -mb-2">
+                <Image 
+                  src="/images/CHRIST Uni.png" 
+                  alt="CHRIST University Logo" 
+                  fill 
+                  className="object-contain object-left brightness-0" 
+                  unoptimized
+                />
+              </div>
               <SectionHeading
                 id="university-title"
                 eyebrow="Our Institution"

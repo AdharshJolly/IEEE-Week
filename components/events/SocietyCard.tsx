@@ -52,7 +52,7 @@ export function SocietyCard({
               fill
               unoptimized
               sizes={isHorizontal ? "5rem" : "3.5rem"}
-              className="object-contain p-2"
+              className="object-contain p-2 brightness-0"
             />
           ) : short ? (
             <span className={isHorizontal ? "text-lg sm:text-xl" : ""}>{short}</span>
