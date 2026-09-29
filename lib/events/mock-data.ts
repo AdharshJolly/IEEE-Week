@@ -7,6 +7,13 @@ import type { EventSummary, Society } from "@/types/event";
  */
 export const mockSocieties: Society[] = [
   {
+    id: "sb",
+    short: "SB",
+    name: "IEEE CHRIST University Student Branch Chapter",
+    logo: "/images/SB.png",
+    description: "The core student body connecting all technical chapters on campus. The Student Branch serves as the central hub for IEEE activities at CHRIST University, coordinating cross-disciplinary events, fostering professional development, and helping students navigate their engineering careers.",
+  },
+  {
     id: "cis",
     short: "CIS",
     name: "Computational Intelligence Society",
@@ -61,13 +68,6 @@ export const mockSocieties: Society[] = [
     name: "Computer Society",
     logo: "/images/CS.png",
     description: "The premier source for information, inspiration, and collaboration in computer science and engineering. We cover everything from software engineering and cloud computing to cybersecurity and algorithms, helping students craft reliable, scalable, and secure systems.",
-  },
-  {
-    id: "sb",
-    short: "SB",
-    name: "IEEE CHRIST University Student Branch Chapter",
-    logo: "/images/SB.png",
-    description: "The core student body connecting all technical chapters on campus. The Student Branch serves as the central hub for IEEE activities at CHRIST University, coordinating cross-disciplinary events, fostering professional development, and helping students navigate their engineering careers.",
   },
 ];
 
