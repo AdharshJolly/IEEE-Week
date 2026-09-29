@@ -9,6 +9,7 @@ import { Decor } from "@/components/ui/Decor";
 import { Heading } from "@/components/ui/Heading";
 import { Section } from "@/components/ui/Section";
 import { Eyebrow, Text } from "@/components/ui/Text";
+import { AddToCalendarButton } from "./AddToCalendarButton";
 import { EventMeta } from "./EventMeta";
 
 export interface EventDetailHeroProps {
@@ -108,16 +109,7 @@ export function EventDetailHero({
           )}
           
           <div className="pt-2">
-            <button 
-              className="flex items-center gap-2 text-content-brand hover:text-interactive-hover font-medium text-sm transition-colors"
-              onClick={() => {
-                // Placeholder for real iCal generation
-                alert("This would download an .ics file for " + title);
-              }}
-            >
-              <CalendarDays className="size-4" />
-              <span>Add to Calendar</span>
-            </button>
+            <AddToCalendarButton title={title} />
           </div>
         </div>
       </div>

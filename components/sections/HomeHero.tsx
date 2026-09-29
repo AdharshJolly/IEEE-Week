@@ -88,9 +88,9 @@ export function HomeHero({
               className="rise-in mt-6"
               style={{ "--i": 4 } as CSSProperties}
             >
-              <Text visualStyle="eyebrow" tone="secondary" className="mb-3 block">
+              <span className="type-eyebrow text-content-secondary mb-3 block">
                 Countdown to kickoff
-              </Text>
+              </span>
               <CountdownTimer targetDate={firstEventDate} />
             </div>
           )}
