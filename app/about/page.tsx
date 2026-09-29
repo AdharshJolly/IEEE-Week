@@ -88,7 +88,7 @@ export default async function AboutPage() {
         <Section spacing="md" id="university" aria-labelledby="university-title">
           <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
             <div className="flex flex-col gap-6 lg:order-1">
-              <div className="relative h-16 w-32 -mb-2">
+              <div className="relative h-20 w-48 -mb-4">
                 <Image 
                   src="/images/CHRIST Uni.png" 
                   alt="CHRIST University Logo" 

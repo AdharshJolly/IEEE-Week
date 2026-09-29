@@ -41,8 +41,9 @@ export function SocietyCard({
       <div className={cn("flex items-start justify-between", isHorizontal ? "shrink-0" : "")}>
         <span
           className={cn(
-            "type-meta rounded-control bg-surface-brand text-content-brand relative flex items-center justify-center overflow-hidden font-semibold",
-            isHorizontal ? "size-16 sm:size-20" : "size-14"
+            "type-meta relative flex items-center justify-center font-semibold",
+            !logo && "rounded-control bg-surface-brand text-content-brand overflow-hidden",
+            isHorizontal ? "size-20 sm:size-24" : "size-16 sm:size-20"
           )}
         >
           {logo ? (
@@ -51,8 +52,8 @@ export function SocietyCard({
               alt=""
               fill
               unoptimized
-              sizes={isHorizontal ? "5rem" : "3.5rem"}
-              className="object-contain p-2 brightness-0"
+              sizes={isHorizontal ? "6rem" : "5rem"}
+              className="object-contain brightness-0"
             />
           ) : short ? (
             <span className={isHorizontal ? "text-lg sm:text-xl" : ""}>{short}</span>
