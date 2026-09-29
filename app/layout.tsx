@@ -48,8 +48,6 @@ export const viewport: Viewport = {
   themeColor: "#ffffff",
 };
 
-import { TransitionLayout } from "@/components/ui/TransitionLayout";
-
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
@@ -58,9 +56,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${bricolage.variable} ${geist.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col" suppressHydrationWarning>
-        <TransitionLayout>
-          {children}
-        </TransitionLayout>
+        {children}
       </body>
     </html>
   );
