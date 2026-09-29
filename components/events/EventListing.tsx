@@ -1,21 +1,19 @@
 "use client";
 
-import { ArrowUpRight } from "lucide-react";
-import Link from "next/link";
 import { useMemo, useState } from "react";
 import { FilterChips } from "@/components/navigation/FilterChips";
-import { Badge } from "@/components/ui/Badge";
 import { Text } from "@/components/ui/Text";
+import { EventCard } from "./EventCard";
 
 export interface EventListingItem {
   id: string;
   href: string;
   title: string;
-  /** Day part, e.g. "13–14". */
+  /** Day part, e.g. "13-14". */
   day: string;
   /** Month part, e.g. "Nov". */
   month: string;
-  /** Full accessible date, e.g. "13–14 Nov". */
+  /** Full accessible date, e.g. "13-14 Nov". */
   dateLabel: string;
   /** Organising society ids, for filtering. */
   societyIds: string[];
@@ -36,8 +34,7 @@ export interface EventListingProps {
 }
 
 /**
- * Chronological editorial list with society filtering. Rows are separated by
- * hairlines instead of cards: date leads, title dominates, meta trails.
+ * Grid of EventCards with society filtering.
  */
 export function EventListing({ items, filters }: EventListingProps) {
   const [selected, setSelected] = useState<string[]>([]);
@@ -86,49 +83,21 @@ export function EventListing({ items, filters }: EventListingProps) {
       {visible.length === 0 ? (
         <Text tone="secondary">No events match this selection.</Text>
       ) : (
-        <ol
+        <div
           aria-label="IEEE Week events by date"
-          className="border-line m-0 flex list-none flex-col border-t p-0"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6"
         >
           {visible.map((item) => (
-            <li key={item.id} className="border-line m-0 border-b">
-              <Link
-                href={item.href}
-                className="group hover:bg-surface-subtle duration-base ease-standard grid grid-cols-[minmax(0,1fr)_auto] gap-x-4 gap-y-3 py-7 no-underline transition-colors md:grid-cols-[9rem_minmax(0,1fr)_auto] md:gap-x-8 md:px-4"
-              >
-                <div className="col-span-2 flex items-baseline gap-2 md:col-span-1">
-                  <span className="font-display text-content-primary text-4xl leading-none font-bold tracking-tight whitespace-nowrap tabular-nums">
-                    {item.day}
-                  </span>
-                  <span className="type-eyebrow text-content-brand">
-                    {item.month}
-                  </span>
-                </div>
-
-                <div className="flex min-w-0 flex-col gap-3">
-                  <span className="sr-only">{item.dateLabel}: </span>
-                  <span className="type-h3 text-content-primary text-balance">
-                    {item.title}
-                  </span>
-                  <span className="type-body-sm text-content-secondary">
-                    {item.societyNames.join(" · ")}
-                  </span>
-                  <span>
-                    <Badge variant={item.tentative ? "outline" : "success"}>
-                      {item.statusLabel}
-                    </Badge>
-                  </span>
-                </div>
-
-                <ArrowUpRight
-                  className="text-content-brand duration-base ease-emphasis mt-1.5 size-6 shrink-0 self-start transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                  strokeWidth={1.75}
-                  aria-hidden="true"
-                />
-              </Link>
-            </li>
+            <EventCard
+              key={item.id}
+              href={item.href}
+              title={item.title}
+              day={item.day}
+              month={item.month}
+              society={item.societyNames.join(" & ")}
+            />
           ))}
-        </ol>
+        </div>
       )}
     </div>
   );

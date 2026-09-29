@@ -3,6 +3,7 @@ import {
   EventListing,
   type EventListingItem,
 } from "@/components/events/EventListing";
+import { FeaturedEventCard } from "@/components/events/FeaturedEventCard";
 import { NavBar } from "@/components/navigation/NavBar";
 import { SiteFooter } from "@/components/navigation/SiteFooter";
 import { EventsHero } from "@/components/sections/EventsHero";
@@ -65,7 +66,11 @@ export default async function EventsPage() {
   }));
 
   const first = events[0];
+  const firstDate = first ? formatDateRange(first.startDate, first.endDate) : null;
   const links = getNavLinks("/events");
+
+  // Filter out the first event from the listing if we display it as featured
+  const remainingItems = items.slice(1);
 
   return (
     <>
@@ -86,6 +91,26 @@ export default async function EventsPage() {
             { value: String(dayCount), label: "Days" },
           ]}
         />
+        
+        {first && firstDate && (
+          <Section spacing="md">
+            <SectionHeading
+              id="featured-event-title"
+              eyebrow="Up Next"
+              title="Featured Event"
+              description="Don't miss our opening event."
+              className="mb-8"
+            />
+            <FeaturedEventCard
+              title={first.title}
+              date={firstDate.label}
+              society={first.societies.map((s) => s.name).join(" & ")}
+              href={`/events/${first.slug}`}
+              layout="split"
+            />
+          </Section>
+        )}
+
         <Section spacing="md" aria-labelledby="listing-title">
           <div className="grid gap-12 lg:grid-cols-12 lg:gap-x-10">
             <div className="lg:sticky lg:top-28 lg:col-span-4 lg:self-start">
@@ -93,12 +118,12 @@ export default async function EventsPage() {
                 id="listing-title"
                 eyebrow="All events"
                 title="In date order."
-                description="Open any event for its dedicated page."
+                description="Explore the rest of the events in our schedule."
               />
             </div>
             <div className="lg:col-span-8">
               <EventListing
-                items={items}
+                items={remainingItems}
                 filters={activeSocieties.map((society) => ({
                   id: society.id,
                   label: society.short,
