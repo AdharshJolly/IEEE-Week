@@ -57,10 +57,10 @@ export default async function ContactPage() {
       />
       <main id="main-content" className="flex-1">
         
-        {/* Hero Section */}
+        {/* Hero & Coordinators Section */}
         <Section
-          spacing="none"
-          className="pb-section-sm pt-10 lg:pt-16"
+          spacing="md"
+          className="pt-10 lg:pt-16"
           aria-labelledby="contact-title"
           decor={
             <>
@@ -73,7 +73,7 @@ export default async function ContactPage() {
             </>
           }
         >
-          <div className="flex flex-col gap-6 max-w-4xl text-center mx-auto items-center">
+          <div className="flex flex-col gap-6 max-w-4xl text-center mx-auto items-center mb-16">
             <Eyebrow className="rise-in">Contact Us</Eyebrow>
             <Heading
               as="h1"
@@ -94,16 +94,13 @@ export default async function ContactPage() {
               teams below or visit us on campus.
             </Text>
           </div>
-        </Section>
 
-        {/* Coordinators Section */}
-        <Section spacing="md">
           <div className="flex flex-col gap-10 max-w-5xl mx-auto">
             <SectionHeading
               id="coordinators-title"
               eyebrow="Leadership"
               title="Our Coordinators"
-              className="text-center mx-auto mt-6"
+              className="text-center mx-auto"
             />
 
             {/* Coordinators Grid */}
