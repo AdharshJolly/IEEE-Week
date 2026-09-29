@@ -66,8 +66,6 @@ export default async function Home() {
     name: society.name,
     short: society.short,
     logo: society.logo,
-    eventCount: events.filter((event) => event.societyIds.includes(society.id))
-      .length,
   }));
 
   const note = anyTentative ? content.tentativeNote : undefined;

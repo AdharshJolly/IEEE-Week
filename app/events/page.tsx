@@ -61,8 +61,6 @@ export default async function EventsPage() {
     name: society.name,
     short: society.short,
     logo: society.logo,
-    eventCount: events.filter((event) => event.societyIds.includes(society.id))
-      .length,
   }));
 
   const first = events[0];

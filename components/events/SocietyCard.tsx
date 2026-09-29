@@ -10,7 +10,6 @@ export interface SocietyCardProps {
   /** Official society logo URL (preferred over `short`). */
   logo?: string;
   description?: string;
-  eventCount?: number;
   href?: string;
   className?: string;
 }
@@ -20,7 +19,6 @@ export function SocietyCard({
   short,
   logo,
   description,
-  eventCount,
   href,
   className,
 }: SocietyCardProps) {
@@ -62,12 +60,6 @@ export function SocietyCard({
           <p className="type-body-sm text-content-secondary">{description}</p>
         )}
       </div>
-      {eventCount !== undefined && (
-        <p className="type-meta text-content-tertiary mt-auto">
-          {String(eventCount).padStart(2, "0")}{" "}
-          {eventCount === 1 ? "event" : "events"}
-        </p>
-      )}
     </Card>
   );
 }

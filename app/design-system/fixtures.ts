@@ -85,25 +85,21 @@ export const societies = [
     name: "IEEE Computer Society",
     short: "CS",
     description: "Software, systems and the craft of building reliable things.",
-    eventCount: 6,
   },
   {
     name: "IEEE Robotics and Automation Society",
     short: "RAS",
     description: "Machines that sense, decide and move.",
-    eventCount: 4,
   },
   {
     name: "IEEE Women in Engineering",
     short: "WIE",
     description: "Mentorship and visibility across every discipline.",
-    eventCount: 3,
   },
   {
     name: "IEEE Power and Energy Society",
     short: "PES",
     description: "Generation, storage and the grid that connects them.",
-    eventCount: 5,
   },
 ];
 

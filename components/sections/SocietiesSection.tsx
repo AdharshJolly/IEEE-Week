@@ -9,7 +9,6 @@ export interface SocietiesSectionItem {
   /** Short code for the mark tile; omitted when identical to `name`. */
   short?: string;
   logo?: string;
-  eventCount: number;
 }
 
 export interface SocietiesSectionProps {
@@ -32,7 +31,6 @@ export function SocietiesSection({ societies }: SocietiesSectionProps) {
                 name={society.name}
                 short={society.short}
                 logo={society.logo}
-                eventCount={society.eventCount}
                 className="w-full"
               />
             </li>
