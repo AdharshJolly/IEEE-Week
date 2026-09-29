@@ -182,15 +182,15 @@ export default async function ContactPage() {
             {/* Google Maps iframe */}
             <div className="relative w-full h-[400px] rounded-2xl overflow-hidden shadow-raised border border-line bg-surface-muted">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3889.33615591244!2d77.43577717616158!3d12.853874387451074!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae4a9bd123fdd9%3A0xcb13511195669f65!2sCHRIST%20(Deemed%20to%20be%20University)%20-%20Kengeri%20Campus!5e0!3m2!1sen!2sus!4v1714457731215!5m2!1sen!2sus"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3889.693920558558!2d77.43321429678957!3d12.863035199999988!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae472f365fe219%3A0xcae219b3b46324db!2sCHRIST%20(Deemed%20to%20be%20University)%20Bangaluru%20Kengeri%20Campus!5e0!3m2!1sen!2sin!4v1728245889176!5m2!1sen!2sin"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
-                allowFullScreen
+                allowFullScreen={true}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
                 className="absolute inset-0 grayscale contrast-125 opacity-90 mix-blend-multiply"
-              ></iframe>
+              />
             </div>
           </div>
         </Section>
