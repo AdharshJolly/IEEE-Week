@@ -72,11 +72,16 @@ export function EventListing({ items }: EventListingProps) {
     (item) => activeCategory === "all" || item.category === activeCategory
   );
 
+  const activeCategories = new Set(items.map((item) => item.category).filter(Boolean));
+  const availableTabs = CATEGORIES.filter(
+    (tab) => tab.value === "all" || activeCategories.has(tab.value as EventCategory)
+  );
+
   return (
     <div className="flex flex-col gap-10">
       {/* Filtering Tabs */}
-      <div className="flex items-center gap-2 overflow-x-auto pb-4 -mx-4 px-4 sm:mx-0 sm:px-0 sm:pb-0 scrollbar-none">
-        {CATEGORIES.map((tab) => {
+      <div className="flex items-center justify-center gap-2 overflow-x-auto pb-4 -mx-4 px-4 sm:mx-0 sm:px-0 sm:pb-0 scrollbar-none">
+        {availableTabs.map((tab) => {
           const isActive = activeCategory === tab.value;
           return (
             <button

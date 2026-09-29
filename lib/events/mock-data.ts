@@ -85,8 +85,8 @@ export const mockEvents: EventSummary[] = [
     ]
   },
   {
-    slug: "cis-llm-genai-workshop",
-    title: "CIS LLMs or Gen AI Workshop",
+    slug: "llm-genai-workshop",
+    title: "LLMs or Gen AI Workshop",
     startDate: "2026-11-12",
     societyIds: ["cis"],
     tentative: true,
