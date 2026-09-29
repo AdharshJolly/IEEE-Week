@@ -42,51 +42,53 @@ export function EventsHero({
         </>
       }
     >
-      <div className="grid items-end gap-x-10 gap-y-10 lg:grid-cols-12">
-        <div className="flex flex-col gap-6 lg:col-span-7">
-          <Eyebrow className="rise-in">{organization}</Eyebrow>
-          <Heading
-            as="h1"
-            id="events-title"
-            visualStyle="display"
-            className="rise-in"
-            style={{ "--i": 1 } as CSSProperties}
+      <div className="flex flex-col items-center justify-center text-center max-w-4xl mx-auto min-h-[30vh] lg:min-h-[40vh] pt-10">
+        <Eyebrow className="rise-in mb-6 justify-center before:hidden text-brand-cyan uppercase tracking-widest">{organization}</Eyebrow>
+        
+        <Heading
+          as="h1"
+          id="events-title"
+          visualStyle="display"
+          className="rise-in text-balance"
+          style={{ "--i": 1 } as CSSProperties}
+        >
+          Explore the{" "}
+          <em className="text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan to-brand-purple">
+            Tech Schedule
+          </em>
+        </Heading>
+
+        {(dateRange || note) && (
+          <Text
+            visualStyle="body-lg"
+            tone="secondary"
+            className="rise-in max-w-2xl text-balance mt-6"
+            style={{ "--i": 2 } as CSSProperties}
           >
-            Events
-            <br />
-            <em>{year}</em>
-          </Heading>
-          {(dateRange || note) && (
-            <Text
-              visualStyle="body-lg"
-              tone="secondary"
-              className="rise-in max-w-xl"
-              style={{ "--i": 2 } as CSSProperties}
-            >
-              {dateRange && (
-                <>
-                  Running <strong>{dateRange}</strong>, in date order.{" "}
-                </>
-              )}
-              {note}
-            </Text>
-          )}
-        </div>
-        <dl
-          className="rise-in border-line m-0 grid grid-cols-3 gap-4 border-t pt-6 lg:col-span-5"
-          style={{ "--i": 2 } as CSSProperties}
+            {dateRange && (
+              <>
+                Join us from <strong>{dateRange}</strong> for {year}&apos;s most anticipated tech events.{" "}
+              </>
+            )}
+            {note}
+          </Text>
+        )}
+
+        <div
+          className="rise-in mt-12 flex flex-wrap items-center justify-center gap-8 sm:gap-16"
+          style={{ "--i": 3 } as CSSProperties}
         >
           {stats.map((stat) => (
-            <div key={stat.label} className="flex flex-col gap-1">
-              <dd className="font-display text-content-primary m-0 text-4xl leading-none font-bold tracking-tight tabular-nums sm:text-5xl">
+            <div key={stat.label} className="flex flex-col items-center gap-2">
+              <span className="font-display text-4xl sm:text-5xl font-bold text-content-primary tabular-nums tracking-tight leading-none">
                 {stat.value}
-              </dd>
-              <dt className="type-eyebrow text-content-tertiary">
+              </span>
+              <span className="type-meta text-content-tertiary uppercase tracking-widest">
                 {stat.label}
-              </dt>
+              </span>
             </div>
           ))}
-        </dl>
+        </div>
       </div>
     </Section>
   );
