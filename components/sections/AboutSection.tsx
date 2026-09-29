@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/Button";
 import { Decor } from "@/components/ui/Decor";
 import { Heading } from "@/components/ui/Heading";
 import { Photo } from "@/components/ui/Photo";
@@ -40,6 +41,11 @@ export function AboutSection({
           <Text visualStyle="label" tone="on-deep-secondary" className="mt-4">
             Presented by {organization}
           </Text>
+          <div className="mt-2">
+            <Button href="/about" variant="primary">
+              Learn more about us
+            </Button>
+          </div>
         </div>
         
         <div className="lg:order-1 relative isolate">

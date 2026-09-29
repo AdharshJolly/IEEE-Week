@@ -4,7 +4,6 @@ import { AboutSection } from "@/components/sections/AboutSection";
 import { EventTimelineSection } from "@/components/sections/EventTimelineSection";
 import { FinalCta } from "@/components/sections/FinalCta";
 import { HomeHero } from "@/components/sections/HomeHero";
-import { SocietiesSection } from "@/components/sections/SocietiesSection";
 import { WeekAtAGlance } from "@/components/sections/WeekAtAGlance";
 import { getEvents, getSocieties } from "@/lib/events";
 import { dayOfMonth, eachDay, formatDateRange } from "@/lib/events/format";
@@ -61,13 +60,6 @@ export default async function Home() {
     };
   });
 
-  const societyItems = activeSocieties.map((society) => ({
-    id: society.id,
-    name: society.name,
-    short: society.short,
-    logo: society.logo,
-  }));
-
   const note = anyTentative ? content.tentativeNote : undefined;
 
   return (
@@ -102,7 +94,6 @@ export default async function Home() {
           detail={content.aboutDetail}
           organization={content.organization}
         />
-        <SocietiesSection societies={societyItems} />
         <FinalCta year={content.year} note={note} />
       </main>
       <SiteFooter
