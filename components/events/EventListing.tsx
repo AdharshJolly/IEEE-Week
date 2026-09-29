@@ -127,7 +127,7 @@ export function EventListing({ items }: EventListingProps) {
                     placeholderLabel={PHOTO_LABELS[i % PHOTO_LABELS.length]}
                   />
                   {/* Heavy gradient to make text readable */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-surface-deep/95 via-surface-deep/60 to-transparent" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
                 </div>
                 
                 {/* Badges Overlay (Top) */}
@@ -145,11 +145,11 @@ export function EventListing({ items }: EventListingProps) {
                     <RegistrationBadge state={item.registrationState} />
                   </div>
                   
-                  <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white text-balance mb-3 group-hover:text-brand-cyan transition-colors">
+                  <h3 className="text-2xl sm:text-3xl font-bold tracking-tight text-white drop-shadow-md text-balance mb-3 group-hover:text-brand-cyan transition-colors">
                     {item.title}
                   </h3>
                   
-                  <div className="flex items-center gap-3 text-white/70 text-sm font-medium">
+                  <div className="flex items-center gap-3 text-white/90 drop-shadow-sm text-sm font-medium">
                     <span className="bg-white/10 px-2.5 py-1 rounded-md backdrop-blur-sm border border-white/10">{item.dateLabel}</span>
                     <span className="w-1 h-1 rounded-full bg-white/30" />
                     <span className="truncate">{item.societyNames.join(", ")}</span>
