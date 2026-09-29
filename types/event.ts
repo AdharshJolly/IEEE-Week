@@ -15,6 +15,8 @@ export interface Society {
   short: string;
   /** Full official name, used for display. */
   name: string;
+  /** A short one-liner description of the society. */
+  description?: string;
   /** Official logo URL. Omit until officially provided. */
   logo?: string;
 }

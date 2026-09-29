@@ -33,6 +33,7 @@ export default async function AboutPage() {
     name: society.name,
     short: society.short,
     logo: society.logo,
+    description: society.description,
   }));
 
   return (

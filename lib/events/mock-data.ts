@@ -6,26 +6,59 @@ import type { EventSummary, Society } from "@/types/event";
  * Consumers must go through `lib/events/index.ts`, never this file.
  */
 export const mockSocieties: Society[] = [
-  { id: "cis", short: "CIS", name: "Computational Intelligence Society" },
-  { id: "vts", short: "VTS", name: "Vehicular Technology Society" },
+  {
+    id: "cis",
+    short: "CIS",
+    name: "Computational Intelligence Society",
+    description: "Advancing neural networks, evolutionary algorithms, and fuzzy systems.",
+  },
+  {
+    id: "vts",
+    short: "VTS",
+    name: "Vehicular Technology Society",
+    description: "Driving the future of land, airborne, and maritime mobile services.",
+  },
   {
     id: "aess",
     short: "AESS",
     name: "Aerospace and Electronic Systems Society",
+    description: "Pioneering integrated systems for space, air, ocean, and ground environments.",
   },
-  { id: "ras", short: "RAS", name: "Robotics and Automation Society" },
-  { id: "grss", short: "GRSS", name: "Geoscience and Remote Sensing Society" },
-  { id: "aps", short: "APS", name: "Antennas and Propagation Society" },
+  {
+    id: "ras",
+    short: "RAS",
+    name: "Robotics and Automation Society",
+    description: "Machines that sense, decide, and move.",
+  },
+  {
+    id: "grss",
+    short: "GRSS",
+    name: "Geoscience and Remote Sensing Society",
+    description: "Applying sensing technology to understand our Earth and its environment.",
+  },
+  {
+    id: "aps",
+    short: "APS",
+    name: "Antennas and Propagation Society",
+    description: "Exploring electromagnetic waves, antennas, and their applications.",
+  },
   {
     id: "mtts",
     short: "MTTS",
     name: "Microwave Theory and Technology Society",
+    description: "Innovating RF, microwave, and millimeter-wave technologies.",
   },
-  { id: "cs", short: "CS", name: "Computer Society" },
+  {
+    id: "cs",
+    short: "CS",
+    name: "Computer Society",
+    description: "Software, systems, and the craft of building reliable things.",
+  },
   {
     id: "sb",
     short: "SB",
     name: "IEEE CHRIST University Student Branch Chapter",
+    description: "The core student body connecting all technical chapters on campus.",
   },
 ];
 
