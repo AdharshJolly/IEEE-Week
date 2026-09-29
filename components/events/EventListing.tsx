@@ -1,7 +1,5 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { FilterChips } from "@/components/navigation/FilterChips";
 import { Text } from "@/components/ui/Text";
 import { EventCard } from "./EventCard";
 
@@ -23,71 +21,32 @@ export interface EventListingItem {
   tentative: boolean;
 }
 
-export interface EventListingFilter {
-  id: string;
-  label: string;
-}
-
 export interface EventListingProps {
   items: EventListingItem[];
-  filters: EventListingFilter[];
 }
 
 /**
- * Grid of EventCards with society filtering.
+ * Grid of EventCards.
  */
-export function EventListing({ items, filters }: EventListingProps) {
-  const [selected, setSelected] = useState<string[]>([]);
-
-  const options = useMemo(
-    () =>
-      filters.map((filter) => ({
-        value: filter.id,
-        label: filter.label,
-        count: items.filter((item) => item.societyIds.includes(filter.id))
-          .length,
-      })),
-    [filters, items],
-  );
-
-  const visible =
-    selected.length === 0
-      ? items
-      : items.filter((item) =>
-          item.societyIds.some((id) => selected.includes(id)),
-        );
-
+export function EventListing({ items }: EventListingProps) {
   return (
     <div className="flex flex-col gap-10">
-      <div className="flex flex-col gap-3">
-        <Text visualStyle="label" tone="secondary">
-          Filter by society
-        </Text>
-        <FilterChips
-          label="Filter events by society"
-          options={options}
-          multiple
-          onChange={setSelected}
-        />
-      </div>
-
       <p
         className="type-meta text-content-tertiary -mb-6"
         role="status"
         aria-live="polite"
       >
-        Showing {visible.length} of {items.length}{" "}
-        {items.length === 1 ? "event" : "events"}
+        Showing {items.length} {items.length === 1 ? "event" : "events"}
       </p>
 
-      {visible.length === 0 ? (
-        <Text tone="secondary">No events match this selection.</Text>
+      {items.length === 0 ? (
+        <Text tone="secondary">No events to display.</Text>
       ) : (
         <div
           aria-label="IEEE Week events by date"
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6"
         >
-          {visible.map((item) => (
+          {items.map((item) => (
             <EventCard
               key={item.id}
               href={item.href}

@@ -112,13 +112,7 @@ export default async function EventsPage() {
               />
             </div>
             <div className="lg:col-span-8">
-              <EventListing
-                items={remainingItems}
-                filters={activeSocieties.map((society) => ({
-                  id: society.id,
-                  label: society.short,
-                }))}
-              />
+              <EventListing items={remainingItems} />
             </div>
           </div>
         </Section>
