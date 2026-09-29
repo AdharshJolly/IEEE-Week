@@ -123,7 +123,7 @@ export default async function AboutPage() {
           </div>
         </Section>
 
-        <SocietiesSection societies={societyItems} />
+        <SocietiesSection societies={societyItems} layout="list" />
 
         <FinalCta
           year={content.year}

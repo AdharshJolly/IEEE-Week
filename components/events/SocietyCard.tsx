@@ -11,6 +11,8 @@ export interface SocietyCardProps {
   logo?: string;
   description?: string;
   href?: string;
+  /** Layout style. 'vertical' is compact for grids. 'horizontal' is roomy for lists. */
+  layout?: "vertical" | "horizontal";
   className?: string;
 }
 
@@ -20,33 +22,45 @@ export function SocietyCard({
   logo,
   description,
   href,
+  layout = "vertical",
   className,
 }: SocietyCardProps) {
+  const isHorizontal = layout === "horizontal";
+
   return (
     <Card
       as="article"
       href={href}
       tone="solid"
-      className={cn("gap-5 p-6", className)}
+      className={cn(
+        "gap-5 p-6",
+        isHorizontal ? "sm:flex-row sm:items-start sm:p-8" : "",
+        className
+      )}
     >
-      <div className="flex items-start justify-between">
-        <span className="type-meta rounded-control bg-surface-brand text-content-brand relative flex size-14 items-center justify-center overflow-hidden font-semibold">
+      <div className={cn("flex items-start justify-between", isHorizontal ? "shrink-0" : "")}>
+        <span
+          className={cn(
+            "type-meta rounded-control bg-surface-brand text-content-brand relative flex items-center justify-center overflow-hidden font-semibold",
+            isHorizontal ? "size-16 sm:size-20" : "size-14"
+          )}
+        >
           {logo ? (
             <Image
               src={logo}
               alt=""
               fill
               unoptimized
-              sizes="3.5rem"
+              sizes={isHorizontal ? "5rem" : "3.5rem"}
               className="object-contain p-2"
             />
           ) : short ? (
-            short
+            <span className={isHorizontal ? "text-lg sm:text-xl" : ""}>{short}</span>
           ) : (
-            <Users className="size-5" strokeWidth={1.75} aria-hidden="true" />
+            <Users className={cn(isHorizontal ? "size-7" : "size-5")} strokeWidth={1.75} aria-hidden="true" />
           )}
         </span>
-        {href && (
+        {href && !isHorizontal && (
           <ArrowUpRight
             className="text-content-brand duration-base ease-emphasis size-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
             strokeWidth={1.75}
@@ -54,10 +68,21 @@ export function SocietyCard({
           />
         )}
       </div>
-      <div className="flex flex-col gap-2">
-        <h3 className="type-title">{name}</h3>
+      <div className={cn("flex flex-col gap-2", isHorizontal ? "flex-1 mt-1 sm:mt-0 sm:ml-2" : "")}>
+        <div className="flex items-start justify-between gap-4">
+          <h3 className={cn("type-title", isHorizontal ? "text-xl" : "")}>{name}</h3>
+          {href && isHorizontal && (
+            <ArrowUpRight
+              className="text-content-brand duration-base ease-emphasis size-5 shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+              strokeWidth={1.75}
+              aria-hidden="true"
+            />
+          )}
+        </div>
         {description && (
-          <p className="type-body-sm text-content-secondary">{description}</p>
+          <p className={cn("text-content-secondary", isHorizontal ? "type-body" : "type-body-sm")}>
+            {description}
+          </p>
         )}
       </div>
     </Card>
