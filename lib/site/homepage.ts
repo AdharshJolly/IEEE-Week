@@ -1,4 +1,5 @@
 import type { HomepageContent } from "@/types/event";
+import { SERIES_NAME } from "./config";
 
 /**
  * Homepage copy, kept out of JSX. Swap for a CMS/DB read later. Leave
@@ -13,7 +14,7 @@ export async function getHomepageContent(): Promise<HomepageContent> {
     aboutStatement:
       "Where computing, robotics, and energy meet.",
     aboutDetail:
-      "Every year, all IEEE societies come together for one week of intensive workshops, talks, and competitions designed to push you out of your comfort zone and into the future of technology. Whether you're here to learn, connect, or build, IEEE Week is your starting point.",
+      `Every year, all IEEE societies come together for one week of intensive workshops, talks, and competitions designed to push you out of your comfort zone and into the future of technology. Whether you're here to learn, connect, or build, ${SERIES_NAME} is your starting point.`,
     tentativeNote:
       "Dates and details are tentative and may change. Final information will be published on each event page.",
   };

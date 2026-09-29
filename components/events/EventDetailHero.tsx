@@ -1,14 +1,17 @@
 import { CalendarDays, CircleDot, Users } from "lucide-react";
-import { type CSSProperties } from "react";
 import {
   Breadcrumbs,
   type BreadcrumbItem,
 } from "@/components/navigation/Breadcrumbs";
+import { MaskedText } from "@/components/motion/MaskedText";
+import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
+import { SignalField } from "@/components/motion/SignalLine";
 import { Badge } from "@/components/ui/Badge";
 import { Decor } from "@/components/ui/Decor";
 import { Heading } from "@/components/ui/Heading";
 import { Section } from "@/components/ui/Section";
 import { Eyebrow, Text } from "@/components/ui/Text";
+import { delay } from "@/lib/motion/tokens";
 import { AddToCalendarButton } from "./AddToCalendarButton";
 import { EventMeta } from "./EventMeta";
 
@@ -44,6 +47,7 @@ export function EventDetailHero({
       decor={
         <>
           <Decor variant="grid" className="inset-0" />
+          <SignalField className="inset-0 h-full w-full" />
           <Decor
             variant="rings-cyan"
             at="100% 0%"
@@ -56,34 +60,37 @@ export function EventDetailHero({
         <Breadcrumbs items={breadcrumbs} className="lg:col-span-12" />
 
         <div className="flex min-w-0 flex-col gap-6 lg:col-span-7">
-          <div className="rise-in flex items-baseline gap-3">
+          <Reveal
+            trigger="mount"
+            direction="none"
+            className="flex items-baseline gap-3"
+          >
             <span className="font-display text-content-brand text-6xl leading-none font-bold tracking-tight tabular-nums sm:text-7xl">
               {day}
             </span>
             <Eyebrow>{month}</Eyebrow>
-          </div>
+          </Reveal>
           <Heading
             as="h1"
             id="event-title"
             visualStyle="h1"
-            className="rise-in text-balance"
-            style={{ "--i": 1 } as CSSProperties}
+            className="text-balance [overflow-wrap:anywhere]"
           >
-            {title}
+            <MaskedText delay={delay.title}>{title}</MaskedText>
           </Heading>
         </div>
 
-        <div
-          className="rise-in bg-surface-elevated border-line rounded-card shadow-raised flex flex-col gap-5 border p-6 lg:col-span-5"
-          style={{ "--i": 2 } as CSSProperties}
+        <Stagger
+          trigger="mount"
+          delay={delay.title + delay.afterTitle}
+          className="bg-surface-elevated border-line rounded-card shadow-raised flex flex-col gap-5 border p-6 lg:col-span-5"
         >
-          <Badge
-            variant={tentative ? "outline" : "success"}
-            dot
-            className="self-start"
-          >
-            {statusLabel}
-          </Badge>
+          <StaggerItem className="self-start">
+            <Badge variant={tentative ? "outline" : "success"} dot>
+              {statusLabel}
+            </Badge>
+          </StaggerItem>
+          <StaggerItem>
           <EventMeta
             layout="stack"
             items={[
@@ -102,16 +109,19 @@ export function EventDetailHero({
               { icon: CircleDot, label: "Status", value: statusLabel },
             ]}
           />
+          </StaggerItem>
           {tentative && (
-            <Text visualStyle="body-sm" tone="tertiary">
-              Dates and details are tentative and may change.
-            </Text>
+            <StaggerItem>
+              <Text visualStyle="body-sm" tone="tertiary">
+                Dates and details are tentative and may change.
+              </Text>
+            </StaggerItem>
           )}
-          
-          <div className="pt-2">
+
+          <StaggerItem className="pt-2">
             <AddToCalendarButton title={title} />
-          </div>
-        </div>
+          </StaggerItem>
+        </Stagger>
       </div>
     </Section>
   );

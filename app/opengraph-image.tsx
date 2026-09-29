@@ -1,10 +1,11 @@
 import { ImageResponse } from "next/og";
+import { SERIES_NAME } from "@/lib/site/config";
 
 // Route segment config
 export const runtime = "edge";
 
 // Image metadata
-export const alt = "IEEE Week | CHRIST University";
+export const alt = `${SERIES_NAME} | CHRIST University`;
 export const size = {
   width: 1200,
   height: 630,
@@ -41,7 +42,7 @@ export default async function Image() {
         >
           {/* Simple geometric logo stand-in if we don't fetch an external image */}
           <div style={{ display: "flex", fontWeight: "bold", fontSize: 32, letterSpacing: "-0.05em", color: "#00E5FF" }}>
-            IEEE Week
+            {SERIES_NAME}
           </div>
         </div>
 

@@ -1,3 +1,5 @@
+import { Reveal } from "@/components/motion/Reveal";
+import { SignalTrail } from "@/components/motion/SignalLine";
 import { Button } from "@/components/ui/Button";
 import { Decor } from "@/components/ui/Decor";
 import { Heading } from "@/components/ui/Heading";
@@ -27,7 +29,7 @@ export function EventRegistrationCta({
         />
       }
     >
-      <div className="flex flex-col items-start gap-6 lg:max-w-2xl">
+      <Reveal className="flex flex-col items-start gap-6 lg:max-w-2xl">
         <Heading as="h2" id="registration-title" visualStyle="h1">
           Registration
         </Heading>
@@ -36,6 +38,7 @@ export function EventRegistrationCta({
             <Text visualStyle="body-lg" tone="secondary">
               Register for {eventTitle}.
             </Text>
+            <SignalTrail className="-mb-2" />
             <Button href={registrationUrl} size="lg" arrow>
               Register now
             </Button>
@@ -50,7 +53,7 @@ export function EventRegistrationCta({
             </Button>
           </>
         )}
-      </div>
+      </Reveal>
     </Section>
   );
 }

@@ -109,11 +109,13 @@ export function EventCard({
               <span />
             )}
             {href && (
-              <ArrowUpRight
-                className="text-content-brand duration-base ease-emphasis size-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-                strokeWidth={1.75}
-                aria-hidden="true"
-              />
+              <span className="magnetic">
+                <ArrowUpRight
+                  className="text-content-brand duration-base ease-emphasis size-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                  strokeWidth={1.75}
+                  aria-hidden="true"
+                />
+              </span>
             )}
           </CardFooter>
         )}

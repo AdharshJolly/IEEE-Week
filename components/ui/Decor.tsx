@@ -2,6 +2,7 @@
 
 import { type CSSProperties, useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
+import { parallaxTravel, scrollOffset } from "@/lib/motion/tokens";
 import { cn } from "@/lib/utils";
 
 export type DecorVariant =
@@ -38,11 +39,11 @@ export function Decor({ variant, at, className }: DecorProps) {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ["start end", "end start"],
+    offset: [...scrollOffset.parallax],
   });
   
   // Subtle parallax effect
-  const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
+  const y = useTransform(scrollYProgress, [0, 1], [...parallaxTravel]);
 
   return (
     <motion.div
@@ -53,7 +54,7 @@ export function Decor({ variant, at, className }: DecorProps) {
         ...(at ? { "--ring-at": at } as CSSProperties : {}),
       }}
       className={cn(
-        "pointer-events-none absolute -z-10",
+        "pointer-events-none absolute -z-10 motion-reduce:!transform-none",
         variantStyles[variant],
         className,
       )}

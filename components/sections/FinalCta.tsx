@@ -1,8 +1,11 @@
+import { Reveal } from "@/components/motion/Reveal";
+import { SignalTrail } from "@/components/motion/SignalLine";
 import { Button } from "@/components/ui/Button";
 import { Decor } from "@/components/ui/Decor";
 import { Heading } from "@/components/ui/Heading";
 import { Section } from "@/components/ui/Section";
 import { Text } from "@/components/ui/Text";
+import { SERIES_NAME } from "@/lib/site/config";
 
 export interface FinalCtaAction {
   label: string;
@@ -37,15 +40,18 @@ export function FinalCta({
         />
       }
     >
-      <div className="flex flex-col items-start gap-8 lg:max-w-2xl">
+      <Reveal className="flex flex-col items-start gap-8 lg:max-w-2xl">
         <Heading as="h2" id="cta-title" visualStyle="h1">
-          Plan your <em>IEEE Week {year}</em>.
+          Plan your <em>
+            {SERIES_NAME} {year}
+          </em>.
         </Heading>
         {note && (
           <Text visualStyle="body-lg" tone="secondary">
             {note}
           </Text>
         )}
+        <SignalTrail className="-mb-4" />
         <div className="flex flex-wrap items-center gap-3">
           <Button href={primary.href} size="lg" arrow>
             {primary.label}
@@ -56,7 +62,7 @@ export function FinalCta({
             </Button>
           )}
         </div>
-      </div>
+      </Reveal>
     </Section>
   );
 }

@@ -18,11 +18,12 @@ import {
 } from "@/lib/events/format";
 import { getHomepageContent } from "@/lib/site/homepage";
 import { getNavLinks } from "@/lib/site/navigation";
+import { SERIES_NAME } from "@/lib/site/config";
 
 export const metadata: Metadata = {
-  title: "Events | IEEE Week",
+  title: `Events | ${SERIES_NAME}`,
   description:
-    "Every IEEE Week event in date order, with the societies organising each one.",
+    `Every ${SERIES_NAME} event in date order, with the societies organising each one.`,
 };
 
 export default async function EventsPage() {

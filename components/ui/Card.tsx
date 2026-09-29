@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { type HTMLAttributes } from "react";
+import { SpotlightLayer } from "@/components/motion/SpotlightLayer";
 import { cn } from "@/lib/utils";
 
 export type CardTone =
@@ -68,6 +69,7 @@ export function Card({
           data-surface={surface}
           className={cn(classes, "no-underline")}
         >
+          <SpotlightLayer />
           {children}
         </Link>
       </Component>

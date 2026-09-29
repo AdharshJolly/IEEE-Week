@@ -11,9 +11,10 @@ import { Eyebrow, Text } from "@/components/ui/Text";
 import { Card } from "@/components/ui/Card";
 import { getHomepageContent } from "@/lib/site/homepage";
 import { getNavLinks } from "@/lib/site/navigation";
+import { SERIES_NAME } from "@/lib/site/config";
 
 export const metadata: Metadata = {
-  title: "Contact | IEEE Week",
+  title: `Contact | ${SERIES_NAME}`,
   description: "Get in touch with the IEEE CHRIST University Student Branch Chapter.",
 };
 
@@ -90,7 +91,7 @@ export default async function ContactPage() {
               className="rise-in max-w-2xl"
               style={{ "--i": 2 } as CSSProperties}
             >
-              Have a question about IEEE Week? We are here to help. Reach out to our 
+              Have a question about {SERIES_NAME}? We are here to help. Reach out to our 
               teams below or visit us on campus.
             </Text>
           </div>

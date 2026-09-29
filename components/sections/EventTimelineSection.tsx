@@ -4,6 +4,7 @@ import {
   EventDateTimeline,
   type EventDateTimelineItem,
 } from "@/components/events/EventDateTimeline";
+import { SERIES_NAME } from "@/lib/site/config";
 import { SectionHeading } from "./SectionHeading";
 
 export interface EventTimelineSectionProps {
@@ -26,7 +27,7 @@ export function EventTimelineSection({ items }: EventTimelineSectionProps) {
           </Button>
         </div>
         <div className="lg:col-span-8">
-          <EventDateTimeline items={items} label="Upcoming IEEE Week events" />
+          <EventDateTimeline items={items} label={`Upcoming ${SERIES_NAME} events`} />
         </div>
       </div>
     </Section>

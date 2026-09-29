@@ -1,4 +1,5 @@
 import { type ReactNode } from "react";
+import { Reveal } from "@/components/motion/Reveal";
 import { Heading } from "@/components/ui/Heading";
 import { Eyebrow, Text } from "@/components/ui/Text";
 import { cn } from "@/lib/utils";
@@ -22,7 +23,7 @@ export function SectionHeading({
   className,
 }: SectionHeadingProps) {
   return (
-    <div className={cn("flex max-w-2xl flex-col gap-4", className)}>
+    <Reveal className={cn("flex max-w-2xl flex-col gap-4", className)}>
       {eyebrow && <Eyebrow onDeep={onDeep}>{eyebrow}</Eyebrow>}
       <Heading
         as="h2"
@@ -40,6 +41,6 @@ export function SectionHeading({
           {description}
         </Text>
       )}
-    </div>
+    </Reveal>
   );
 }

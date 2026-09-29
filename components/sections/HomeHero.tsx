@@ -1,5 +1,7 @@
 import { CalendarDays } from "lucide-react";
-import { type CSSProperties } from "react";
+import { MaskedText } from "@/components/motion/MaskedText";
+import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
+import { SignalField } from "@/components/motion/SignalLine";
 import { Button } from "@/components/ui/Button";
 import { CountdownTimer } from "@/components/ui/CountdownTimer";
 import { Decor } from "@/components/ui/Decor";
@@ -7,8 +9,11 @@ import { Heading } from "@/components/ui/Heading";
 import { Photo } from "@/components/ui/Photo";
 import { Section } from "@/components/ui/Section";
 import { Eyebrow, Text } from "@/components/ui/Text";
+import { delay } from "@/lib/motion/tokens";
 
 export interface HomeHeroProps {
+  /** Event-series name, from `lib/site/config`. Any length. */
+  title: string;
   organization: string;
   year: string;
   summary: string;
@@ -21,6 +26,7 @@ export interface HomeHeroProps {
 }
 
 export function HomeHero({
+  title,
   organization,
   year,
   summary,
@@ -37,6 +43,7 @@ export function HomeHero({
       decor={
         <>
           <Decor variant="grid" className="inset-0" />
+          <SignalField ambient className="inset-0 h-full w-full" />
           <Decor
             variant="rings-cyan"
             at="100% 0%"
@@ -50,55 +57,52 @@ export function HomeHero({
       }
     >
       <div className="grid items-center gap-x-10 gap-y-14 lg:grid-cols-12">
-        <div className="flex flex-col gap-7 lg:col-span-7">
-          <Eyebrow className="rise-in">{organization}</Eyebrow>
+        <div className="flex min-w-0 flex-col gap-7 lg:col-span-7">
+          <Reveal trigger="mount" direction="none">
+            <Eyebrow>{organization}</Eyebrow>
+          </Reveal>
           <Heading
             as="h1"
             id="hero-title"
             visualStyle="display"
-            className="rise-in"
-            style={{ "--i": 1 } as CSSProperties}
+            className="text-balance [overflow-wrap:anywhere]"
           >
-            IEEE Week
-            <br />
-            <em>{year}</em>
+            <MaskedText delay={delay.title}>
+              {title}
+              <br />
+              <em>{year}</em>
+            </MaskedText>
           </Heading>
-          <Text
-            visualStyle="body-lg"
-            tone="secondary"
-            className="rise-in max-w-xl"
-            style={{ "--i": 2 } as CSSProperties}
-          >
-            {summary}
-          </Text>
-          <div
-            className="rise-in flex flex-wrap items-center gap-3"
-            style={{ "--i": 3 } as CSSProperties}
-          >
-            <Button href="/events" size="lg" arrow>
-              Explore Events
-            </Button>
-            <Button href="#schedule" size="lg" variant="outline">
-              View Schedule
-            </Button>
-          </div>
-          
-          {firstEventDate && (
-            <div 
-              className="rise-in mt-6"
-              style={{ "--i": 4 } as CSSProperties}
-            >
-              <span className="type-eyebrow text-content-secondary mb-3 block">
-                Countdown to kickoff
-              </span>
-              <CountdownTimer targetDate={firstEventDate} />
-            </div>
-          )}
+          <Stagger trigger="mount" delay={delay.title + delay.afterTitle} className="flex flex-col gap-7">
+            <StaggerItem>
+              <Text visualStyle="body-lg" tone="secondary" className="max-w-xl">
+                {summary}
+              </Text>
+            </StaggerItem>
+            <StaggerItem className="flex flex-wrap items-center gap-3">
+              <Button href="/events" size="lg" arrow>
+                Explore Events
+              </Button>
+              <Button href="#schedule" size="lg" variant="outline">
+                View Schedule
+              </Button>
+            </StaggerItem>
+            {firstEventDate && (
+              <StaggerItem className="mt-6">
+                <span className="type-eyebrow text-content-secondary mb-3 block">
+                  Countdown to kickoff
+                </span>
+                <CountdownTimer targetDate={firstEventDate} />
+              </StaggerItem>
+            )}
+          </Stagger>
         </div>
 
-        <div
-          className="rise-in relative lg:col-span-5"
-          style={{ "--i": 2 } as CSSProperties}
+        <Reveal
+          trigger="mount"
+          direction="up"
+          delay={delay.title + delay.afterTitle}
+          className="relative lg:col-span-5"
         >
           <div className="shape-leaf bg-surface-brand p-2.5">
             <Photo
@@ -126,7 +130,7 @@ export function HomeHero({
               </div>
             </div>
           )}
-        </div>
+        </Reveal>
       </div>
     </Section>
   );

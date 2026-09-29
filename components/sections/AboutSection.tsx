@@ -4,6 +4,7 @@ import { Heading } from "@/components/ui/Heading";
 import { Photo } from "@/components/ui/Photo";
 import { Section } from "@/components/ui/Section";
 import { Eyebrow, Text } from "@/components/ui/Text";
+import { SERIES_NAME } from "@/lib/site/config";
 
 export interface AboutSectionProps {
   statement: string;
@@ -26,7 +27,7 @@ export function AboutSection({
     >
       <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
         <div className="flex flex-col gap-6 lg:order-2">
-          <Eyebrow onDeep>About IEEE Week</Eyebrow>
+          <Eyebrow onDeep>About {SERIES_NAME}</Eyebrow>
           <Heading as="h2" id="about-title" visualStyle="h1" tone="deep">
             {statement}
           </Heading>

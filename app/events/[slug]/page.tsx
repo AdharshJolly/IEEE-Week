@@ -9,6 +9,7 @@ import { getEventBySlug, getEvents, getRelatedEvents } from "@/lib/events";
 import { eventStatusLabel, formatDateRange } from "@/lib/events/format";
 import { getHomepageContent } from "@/lib/site/homepage";
 import { getNavLinks } from "@/lib/site/navigation";
+import { SERIES_NAME } from "@/lib/site/config";
 
 export async function generateStaticParams() {
   return (await getEvents()).map((event) => ({ slug: event.slug }));
@@ -22,7 +23,7 @@ export async function generateMetadata({
   const event = await getEventBySlug((await params).slug);
   if (!event) return {};
   return {
-    title: `${event.title} | IEEE Week`,
+    title: `${event.title} | ${SERIES_NAME}`,
     description: event.description,
   };
 }

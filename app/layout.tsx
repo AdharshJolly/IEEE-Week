@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, Geist, Geist_Mono } from "next/font/google";
+import { MotionProvider } from "@/components/motion/MotionProvider";
+import { SERIES_NAME } from "@/lib/site/config";
 import "./globals.css";
 
 // Display: Bricolage Grotesque has the opinionated, slightly condensed
@@ -24,21 +26,21 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000"),
   title: {
-    template: "%s | IEEE Week",
-    default: "IEEE Week | CHRIST University Student Branch",
+    template: `%s | ${SERIES_NAME}`,
+    default: `${SERIES_NAME} | CHRIST University Student Branch`,
   },
   description:
-    "Official website for IEEE Week, the multi-society event series hosted by the IEEE CHRIST University Student Branch Chapter.",
+    `Official website for ${SERIES_NAME}, the multi-society event series hosted by the IEEE CHRIST University Student Branch Chapter.`,
   openGraph: {
-    title: "IEEE Week | CHRIST University",
-    description: "Official website for IEEE Week, the multi-society event series hosted by the IEEE CHRIST University Student Branch Chapter.",
-    siteName: "IEEE Week",
+    title: `${SERIES_NAME} | CHRIST University`,
+    description: `Official website for ${SERIES_NAME}, the multi-society event series hosted by the IEEE CHRIST University Student Branch Chapter.`,
+    siteName: SERIES_NAME,
     locale: "en_IN",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "IEEE Week | CHRIST University",
+    title: `${SERIES_NAME} | CHRIST University`,
     description: "Join the multi-society flagship event series by IEEE CHRIST University.",
   },
   keywords: ["IEEE", "CHRIST University", "Engineering", "Technology", "Events", "Student Branch"],
@@ -56,7 +58,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${bricolage.variable} ${geist.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col" suppressHydrationWarning>
-        {children}
+        <MotionProvider>{children}</MotionProvider>
       </body>
     </html>
   );

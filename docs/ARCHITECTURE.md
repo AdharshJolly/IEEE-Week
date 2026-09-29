@@ -25,40 +25,30 @@ library only when a concrete requirement can't be met without one.
 
 ```
 app/
-├── layout.tsx              # root layout, fonts, metadata
-├── page.tsx                # design-system showcase (temporary — see below)
-├── globals.css             # design tokens + base styles
-├── events/
-│   ├── page.tsx             # event discovery (placeholder)
-│   └── [slug]/page.tsx      # event detail (placeholder)
-└── register/
-    └── [eventId]/page.tsx   # registration (placeholder)
+├── layout.tsx              # root layout, fonts, metadata, MotionProvider
+├── template.tsx            # per-navigation page transition
+├── page.tsx                # homepage
+├── globals.css             # design tokens + base styles + motion CSS
+├── about/  contact/  events/  events/[slug]/  register/  design-system/
 
 components/
-├── ui/                      # generic primitives: Button, IconButton,
-│                             # Heading, Text, Badge, Container
-├── navigation/               # header/footer/nav composition (not yet built)
-├── events/                   # event cards, filters, listings (not yet built)
-├── registration/             # registration forms (not yet built)
-└── sections/                  # homepage/marketing sections (not yet built)
+├── ui/                      # generic primitives (Button, Card, Heading, Decor, ...)
+├── motion/                  # framer-motion primitives (see docs/MOTION.md)
+├── navigation/              # nav bar, footer, breadcrumbs, filters
+├── events/                  # cards, timelines, event detail pieces, listing
+├── sections/                # homepage/marketing sections
+└── registration/            # reserved
 
 lib/
 ├── db/                       # MongoDB client + data access (not yet built)
-├── events/                   # event business logic (not yet built)
-├── registrations/            # registration business logic (not yet built)
-├── validation/                # Zod schemas (not yet built)
-└── utils.ts                   # small shared helpers (e.g. `cn`)
+├── events/                   # event data access (mock data for now)
+├── site/                     # config (series name), homepage copy, navigation
+├── motion/                   # motion tokens
+├── registrations/  validation/
+└── utils.ts
 
-types/                         # shared TypeScript types (not yet populated)
-public/
-├── images/
-└── icons/
-docs/
-└── ARCHITECTURE.md
+types/  public/  docs/
 ```
-
-Empty directories are checked in with a `.gitkeep` so the intended shape is
-visible before each area is filled in.
 
 ## Design-system architecture
 
@@ -108,10 +98,11 @@ body | body-sm | label | eyebrow | caption | meta` in the components layer.
 - Radius: `tag` 4px, `control` 10px, `card` 18px, `panel` 32px, plus the
   signature `.shape-leaf` crop. `rounded-full` only for avatars and dots.
 - Elevation: `rest`, `raised`, `overlay`, `float`, all tinted with dark blue.
-- Motion: durations `instant/fast/base/slow/reveal`, easings `standard` and
-  `emphasis`. Only transform and opacity animate. Load-in (`.rise-in`) and
-  scroll reveal (`.reveal`, CSS scroll-driven) are disabled under
-  `prefers-reduced-motion`.
+- Motion: CSS tokens `--duration-*` / `--ease-*` plus the framer-motion
+  system documented in `docs/MOTION.md` (tokens in `lib/motion/tokens.ts`,
+  primitives in `components/motion`). Only transform and opacity animate.
+  Legacy CSS `.rise-in` / `.reveal` remain on some pages. Everything is
+  disabled or reduced under `prefers-reduced-motion`.
 - Decoration: `<Decor variant>` (dots, grid, rings, fields), always masked,
   tinted from the palette and `aria-hidden`.
 
@@ -131,7 +122,9 @@ body | body-sm | label | eyebrow | caption | meta` in the components layer.
 
 ## Current homepage
 
-`app/page.tsx` is a placeholder. The design system is demonstrated at
+`app/page.tsx` composes `HomeHero`, `WeekAtAGlance`, `EventTimelineSection`,
+`AboutSection` and `FinalCta` from `lib/events` mock data. The event-series
+name comes from `lib/site/config.ts`. The design system is demonstrated at
 `/design-system`, a composition-only showcase (sections in
 `app/design-system/_sections`, demo data in `fixtures.ts`).
 

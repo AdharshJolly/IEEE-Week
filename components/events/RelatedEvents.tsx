@@ -2,6 +2,7 @@ import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { SectionHeading } from "@/components/sections/SectionHeading";
 import { Section } from "@/components/ui/Section";
+import { SERIES_NAME } from "@/lib/site/config";
 
 export interface RelatedEventItem {
   id: string;
@@ -19,7 +20,7 @@ export function RelatedEvents({ items }: { items: RelatedEventItem[] }) {
         <SectionHeading
           id="related-title"
           eyebrow="Related events"
-          title="Also at IEEE Week."
+          title={`Also at ${SERIES_NAME}.`}
         />
         <ul className="border-line m-0 grid list-none border-t p-0 md:grid-cols-3 md:gap-x-8">
           {items.map((item) => (

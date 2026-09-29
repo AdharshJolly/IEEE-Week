@@ -7,6 +7,7 @@ import { HomeHero } from "@/components/sections/HomeHero";
 import { WeekAtAGlance } from "@/components/sections/WeekAtAGlance";
 import { getEvents, getSocieties } from "@/lib/events";
 import { dayOfMonth, eachDay, formatDateRange } from "@/lib/events/format";
+import { SERIES_NAME } from "@/lib/site/config";
 import { getHomepageContent } from "@/lib/site/homepage";
 import { getNavLinks } from "@/lib/site/navigation";
 
@@ -71,6 +72,7 @@ export default async function Home() {
       />
       <main id="main-content" className="flex-1">
         <HomeHero
+          title={SERIES_NAME}
           organization={content.organization}
           year={content.year}
           summary={content.heroSummary}

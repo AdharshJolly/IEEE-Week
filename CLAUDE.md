@@ -64,6 +64,13 @@ component — extend the token set instead.
 Installed design/UI skills may be used when useful, but must not create a
 competing design system. Reuse existing components before creating new ones.
 
+## Motion
+
+Motion follows `docs/MOTION.md`. Use the primitives in `components/motion`
+and the tokens in `lib/motion/tokens.ts`; never hardcode durations, easings,
+distances or springs, and never hardcode the event-series name (use
+`SERIES_NAME` from `lib/site/config.ts`). Honour reduced motion and touch.
+
 ## Engineering rules
 
 - Server Components by default. Add `"use client"` only when a component

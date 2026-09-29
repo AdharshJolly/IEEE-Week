@@ -5,7 +5,9 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { EventCategory, RegistrationState } from "@/types/event";
 import { cn } from "@/lib/utils";
+import { SpotlightLayer } from "@/components/motion/SpotlightLayer";
 import { Photo } from "@/components/ui/Photo";
+import { duration, ease, spring } from "@/lib/motion/tokens";
 
 export interface EventListingItem {
   id: string;
@@ -107,17 +109,21 @@ export function EventListing({ items }: EventListingProps) {
             <motion.div
               layout
               key={item.id}
-              initial={{ opacity: 0, scale: 0.9 }}
+              initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.3, type: "spring", bounce: 0.2 }}
+              exit={{ opacity: 0, scale: 0.96 }}
+              transition={{
+                layout: spring.layout,
+                opacity: { duration: duration.base, ease: ease.standard },
+                scale: { duration: duration.base, ease: ease.emphasis },
+              }}
               className={cn(
                 "group relative overflow-hidden rounded-[2rem] border border-white/10 bg-surface-deep transition-all hover:border-brand-blue/50 hover:shadow-glow",
                 // Make the first item span two columns on desktop if it's the "All" view
                 i === 0 && activeCategory === "all" ? "md:col-span-2" : "col-span-1"
               )}
             >
-              <Link href={item.href} className="absolute inset-0 flex flex-col outline-none">
+              <Link href={item.href} className="absolute inset-0 flex flex-col outline-none" data-spotlight="off">
                 {/* Full-bleed Background Image */}
                 <div className="absolute inset-0 z-0">
                   <Photo
@@ -129,6 +135,7 @@ export function EventListing({ items }: EventListingProps) {
                   {/* Heavy gradient to make text readable */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent" />
                 </div>
+                <SpotlightLayer />
                 
                 {/* Badges Overlay (Top) */}
                 <div className="absolute top-5 right-5 z-20 flex gap-2">
@@ -140,7 +147,7 @@ export function EventListing({ items }: EventListingProps) {
                 </div>
 
                 {/* Content Overlay (Bottom) */}
-                <div className="relative z-10 flex flex-1 flex-col justify-end p-6 sm:p-8">
+                <div className="magnetic relative z-10 flex flex-1 flex-col justify-end p-6 sm:p-8">
                   <div className="mb-4">
                     <RegistrationBadge state={item.registrationState} />
                   </div>

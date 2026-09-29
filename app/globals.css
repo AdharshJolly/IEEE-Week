@@ -620,3 +620,78 @@
 }
 
 
+
+/* ----- Motion system (see docs/MOTION.md) --------------------------------
+   CSS half of the motion language: cursor highlight, magnetic offset, page
+   signal. JS half lives in components/motion + lib/motion/tokens.ts. */
+:root {
+  --distance-magnetic: 0.3rem;
+}
+
+/* Cursor-following highlight; SpotlightLayer writes --mx/--my on the parent. */
+.spotlight-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity var(--duration-base) var(--ease-standard);
+  background: radial-gradient(
+    18rem circle at var(--mx, 50%) var(--my, 50%),
+    color-mix(in srgb, var(--brand-cyan) 16%, transparent),
+    transparent 70%
+  );
+}
+
+[data-spotlight="on"] > .spotlight-layer {
+  opacity: 1;
+}
+
+/* Small pointer-driven offset; SpotlightLayer writes --tx/--ty (-1..1). */
+.magnetic {
+  transform: translate(
+    calc(var(--tx, 0) * var(--distance-magnetic)),
+    calc(var(--ty, 0) * var(--distance-magnetic))
+  );
+  transition: transform var(--duration-base) var(--ease-emphasis);
+}
+
+/* Route signal: one trace across the top edge on navigation. */
+.page-signal {
+  position: fixed;
+  inset: 0 0 auto 0;
+  z-index: 50;
+  height: 2px;
+  pointer-events: none;
+  transform-origin: left;
+  background: linear-gradient(90deg, var(--brand-blue), var(--brand-cyan));
+}
+
+/* Touch devices get no cursor effects (no hover, coarse pointer). */
+@media (hover: none), (pointer: coarse) {
+  .spotlight-layer {
+    display: none;
+  }
+
+  .magnetic {
+    transform: none;
+  }
+}
+
+/* Reduced motion: no cursor effects, masks, ambient loops or route signal.
+   Content stays fully visible. */
+@media (prefers-reduced-motion: reduce) {
+  .spotlight-layer,
+  .signal-packet,
+  .page-signal {
+    display: none;
+  }
+
+  .magnetic {
+    transform: none;
+  }
+
+  [data-masked] {
+    clip-path: none !important;
+  }
+}

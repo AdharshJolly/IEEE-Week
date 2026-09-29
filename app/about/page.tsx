@@ -14,11 +14,12 @@ import { Eyebrow, Text } from "@/components/ui/Text";
 import { getSocieties } from "@/lib/events";
 import { getHomepageContent } from "@/lib/site/homepage";
 import { getNavLinks } from "@/lib/site/navigation";
+import { SERIES_NAME } from "@/lib/site/config";
 
 export const metadata: Metadata = {
-  title: "About | IEEE Week",
+  title: `About | ${SERIES_NAME}`,
   description:
-    "Learn about CHRIST University and the IEEE societies organizing IEEE Week.",
+    `Learn about CHRIST University and the IEEE societies organizing ${SERIES_NAME}.`,
 };
 
 export default async function AboutPage() {
@@ -70,7 +71,7 @@ export default async function AboutPage() {
               className="rise-in"
               style={{ "--i": 1 } as CSSProperties}
             >
-              The community behind <em>IEEE Week</em>
+              The community behind <em>{SERIES_NAME}</em>
             </Heading>
             <Text
               visualStyle="body-lg"
