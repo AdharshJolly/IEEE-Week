@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { type CSSProperties } from "react";
-import { Mail, MapPin, ExternalLink, User, GraduationCap } from "lucide-react";
+import { Mail, MapPin, User, GraduationCap, Phone } from "lucide-react";
 import { NavBar } from "@/components/navigation/NavBar";
 import { SiteFooter } from "@/components/navigation/SiteFooter";
 import { SectionHeading } from "@/components/sections/SectionHeading";
@@ -21,29 +21,30 @@ export default async function ContactPage() {
   const content = await getHomepageContent();
   const links = getNavLinks("/contact");
 
-  const primaryEmail = "ieee@christuniversity.in";
-
   const coordinators = [
     {
       role: "Faculty Coordinator",
       name: "Dr. Smith",
       description: "Faculty Sponsor & Advisor",
       icon: <GraduationCap className="size-6 text-content-brand" strokeWidth={1.5} />,
-      email: primaryEmail
+      email: "faculty@ieeechrist.com",
+      phone: "+91 98765 43210"
     },
     {
       role: "Student Coordinator",
       name: "Alice",
       description: "Chairperson, IEEE SB",
       icon: <User className="size-6 text-content-brand" strokeWidth={1.5} />,
-      email: primaryEmail
+      email: "alice@ieeechrist.com",
+      phone: "+91 98765 43211"
     },
     {
       role: "Student Coordinator",
       name: "Bob",
       description: "Vice-Chairperson, IEEE SB",
       icon: <User className="size-6 text-content-brand" strokeWidth={1.5} />,
-      email: primaryEmail
+      email: "bob@ieeechrist.com",
+      phone: "+91 98765 43212"
     }
   ];
 
@@ -98,29 +99,6 @@ export default async function ContactPage() {
         {/* Coordinators Section */}
         <Section spacing="md">
           <div className="flex flex-col gap-10 max-w-5xl mx-auto">
-            {/* Primary Contact Banner */}
-            <Card
-              as="article"
-              href={`mailto:${primaryEmail}`}
-              tone="solid"
-              className="flex flex-col sm:flex-row items-center gap-6 p-8 sm:p-10 text-center sm:text-left group rise-in"
-              style={{ "--i": 2 } as CSSProperties}
-            >
-              <div className="size-16 rounded-full bg-surface-brand/10 flex items-center justify-center shrink-0">
-                <Mail className="size-8 text-content-brand" strokeWidth={1.5} />
-              </div>
-              <div className="flex flex-col gap-2 flex-1">
-                <h3 className="type-title">Primary Email</h3>
-                <p className="type-body text-content-secondary">
-                  For all general inquiries, sponsorships, and registration support, please reach out to our official branch email.
-                </p>
-              </div>
-              <div className="flex items-center gap-2 text-content-brand font-medium group-hover:translate-x-1 transition-transform whitespace-nowrap mt-4 sm:mt-0">
-                <span className="text-lg">{primaryEmail}</span>
-                <ExternalLink className="size-5" />
-              </div>
-            </Card>
-
             <SectionHeading
               id="coordinators-title"
               eyebrow="Leadership"
@@ -134,9 +112,8 @@ export default async function ContactPage() {
                 <Card
                   key={person.name}
                   as="article"
-                  href={`mailto:${person.email}`}
                   className="flex flex-col gap-4 p-8 group rise-in"
-                  style={{ "--i": i + 3 } as CSSProperties}
+                  style={{ "--i": i + 1 } as CSSProperties}
                 >
                   <div className="size-12 rounded-full bg-surface-brand/10 flex items-center justify-center mb-2">
                     {person.icon}
@@ -146,9 +123,20 @@ export default async function ContactPage() {
                     <h3 className="type-title">{person.name}</h3>
                   </div>
                   <p className="type-body text-content-secondary flex-1">{person.description}</p>
-                  <div className="flex items-center gap-2 mt-4 text-content-primary font-medium group-hover:text-content-brand transition-colors">
-                    <Mail className="size-4 opacity-70" />
-                    <span className="text-sm">Contact</span>
+                  
+                  <div className="flex flex-col gap-3 mt-2">
+                    {person.email && (
+                      <a href={`mailto:${person.email}`} className="flex items-center gap-2 text-content-primary font-medium hover:text-content-brand transition-colors w-fit">
+                        <Mail className="size-4 opacity-70" />
+                        <span className="text-sm">{person.email}</span>
+                      </a>
+                    )}
+                    {person.phone && (
+                      <a href={`tel:${person.phone.replace(/\s+/g, '')}`} className="flex items-center gap-2 text-content-primary font-medium hover:text-content-brand transition-colors w-fit">
+                        <Phone className="size-4 opacity-70" />
+                        <span className="text-sm">{person.phone}</span>
+                      </a>
+                    )}
                   </div>
                 </Card>
               ))}
