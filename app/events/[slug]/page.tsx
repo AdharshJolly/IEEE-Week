@@ -56,7 +56,7 @@ export default async function EventDetailPage({
           dateLabel={date.label}
           day={date.day}
           month={date.month}
-          societyNames={event.societies.map((society) => society.name)}
+          societyNames={event.societies.map((society) => society.short)}
           statusLabel={eventStatusLabel(event.tentative)}
           tentative={event.tentative}
           breadcrumbs={[
@@ -79,7 +79,7 @@ export default async function EventDetailPage({
             href: `/events/${item.slug}`,
             title: item.title,
             dateLabel: formatDateRange(item.startDate, item.endDate).label,
-            societyNames: item.societies.map((society) => society.name),
+            societyNames: item.societies.map((society) => society.short),
           }))}
         />
       </main>

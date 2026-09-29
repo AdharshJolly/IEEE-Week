@@ -49,7 +49,7 @@ export default async function EventsPage() {
       month: date.month,
       dateLabel: date.label,
       societyIds: event.societyIds,
-      societyNames: event.societies.map((society) => society.name),
+      societyNames: event.societies.map((society) => society.short),
       statusLabel: eventStatusLabel(event.tentative),
       tentative: event.tentative,
       category: event.category,
@@ -96,7 +96,7 @@ export default async function EventsPage() {
             <FeaturedEventCard
               title={first.title}
               date={firstDate.label}
-              society={first.societies.map((s) => s.name).join(" & ")}
+              society={first.societies.map((s) => s.short).join(" & ")}
               href={`/events/${first.slug}`}
               layout="split"
             />
