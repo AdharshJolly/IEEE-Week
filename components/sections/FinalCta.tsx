@@ -1,6 +1,6 @@
 import { Reveal } from "@/components/motion/Reveal";
 import { SignalTrail } from "@/components/motion/SignalLine";
-import { Button } from "@/components/ui/Button";
+import { SpecularButton } from "@/components/ui/SpecularButton";
 import { Decor } from "@/components/ui/Decor";
 import { Heading } from "@/components/ui/Heading";
 import { Section } from "@/components/ui/Section";
@@ -42,9 +42,11 @@ export function FinalCta({
     >
       <Reveal className="flex flex-col items-start gap-8 lg:max-w-2xl">
         <Heading as="h2" id="cta-title" visualStyle="h1">
-          Plan your <em>
+          Plan your{" "}
+          <em>
             {SERIES_NAME} {year}
-          </em>.
+          </em>
+          .
         </Heading>
         {note && (
           <Text visualStyle="body-lg" tone="secondary">
@@ -53,13 +55,13 @@ export function FinalCta({
         )}
         <SignalTrail className="-mb-4" />
         <div className="flex flex-wrap items-center gap-3">
-          <Button href={primary.href} size="lg" arrow>
+          <SpecularButton href={primary.href} size="lg" arrow>
             {primary.label}
-          </Button>
+          </SpecularButton>
           {secondary && (
-            <Button href={secondary.href} size="lg" variant="outline">
+            <SpecularButton href={secondary.href} size="lg" variant="secondary">
               {secondary.label}
-            </Button>
+            </SpecularButton>
           )}
         </div>
       </Reveal>

@@ -1,5 +1,6 @@
 import { ArrowUpRight, CalendarDays, MapPin } from "lucide-react";
 import { type ReactNode } from "react";
+import { BorderGlow } from "@/components/effects/BorderGlow";
 import { Card } from "@/components/ui/Card";
 import { Photo } from "@/components/ui/Photo";
 import { cn } from "@/lib/utils";
@@ -23,6 +24,11 @@ export interface FeaturedEventCardProps {
   layout?: "split" | "overlay";
   ctaLabel?: string;
   href?: string;
+  /**
+   * Proximity glow on the `split` layout, for the one interactive featured
+   * surface on a page. Replaces the cursor highlight on that card.
+   */
+  glow?: boolean;
   className?: string;
 }
 
@@ -38,6 +44,7 @@ export function FeaturedEventCard({
   layout = "split",
   ctaLabel = "View event",
   href,
+  glow = false,
   className,
 }: FeaturedEventCardProps) {
   const overlay = layout === "overlay";
@@ -138,13 +145,16 @@ export function FeaturedEventCard({
     );
   }
 
-  return (
+  const split = (
     <Card
       as="article"
-      tone="subtle"
+      tone={glow ? "bare" : "subtle"}
       radius="panel"
       href={href}
-      className={cn("p-3 sm:p-4 lg:flex-row lg:items-stretch", className)}
+      className={cn(
+        "p-3 sm:p-4 lg:flex-row lg:items-stretch",
+        !glow && className,
+      )}
     >
       <Photo
         src={image}
@@ -157,5 +167,12 @@ export function FeaturedEventCard({
       />
       <div className="flex flex-col lg:flex-1">{content}</div>
     </Card>
+  );
+
+  if (!glow) return split;
+  return (
+    <BorderGlow surface="subtle" radius="panel" className={className}>
+      {split}
+    </BorderGlow>
   );
 }

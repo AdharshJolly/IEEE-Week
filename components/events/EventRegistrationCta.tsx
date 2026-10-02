@@ -1,6 +1,6 @@
 import { Reveal } from "@/components/motion/Reveal";
 import { SignalTrail } from "@/components/motion/SignalLine";
-import { Button } from "@/components/ui/Button";
+import { SpecularButton } from "@/components/ui/SpecularButton";
 import { Decor } from "@/components/ui/Decor";
 import { Heading } from "@/components/ui/Heading";
 import { Section } from "@/components/ui/Section";
@@ -39,18 +39,18 @@ export function EventRegistrationCta({
               Register for {eventTitle}.
             </Text>
             <SignalTrail className="-mb-2" />
-            <Button href={registrationUrl} size="lg" arrow>
+            <SpecularButton href={registrationUrl} size="lg" arrow>
               Register now
-            </Button>
+            </SpecularButton>
           </>
         ) : (
           <>
             <Text visualStyle="body-lg" tone="secondary">
               Registration details for this event have not been announced yet.
             </Text>
-            <Button href="/events" size="lg" variant="outline">
+            <SpecularButton href="/events" size="lg" variant="secondary">
               Browse all events
-            </Button>
+            </SpecularButton>
           </>
         )}
       </Reveal>

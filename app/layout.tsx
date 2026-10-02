@@ -1,7 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Bricolage_Grotesque, Geist, Geist_Mono } from "next/font/google";
-import { MotionProvider } from "@/components/motion/MotionProvider";
 import { SERIES_NAME } from "@/lib/site/config";
+import { getSiteUrl } from "@/lib/site/url";
 import "./globals.css";
 
 // Display: Bricolage Grotesque has the opinionated, slightly condensed
@@ -22,15 +22,13 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "http://localhost:3000"),
+  metadataBase: getSiteUrl(),
   title: {
     template: `%s | ${SERIES_NAME}`,
     default: `${SERIES_NAME} | CHRIST University Student Branch`,
   },
-  description:
-    `Official website for ${SERIES_NAME}, the multi-society event series hosted by the IEEE CHRIST University Student Branch Chapter.`,
+  description: `Official website for ${SERIES_NAME}, the multi-society event series hosted by the IEEE CHRIST University Student Branch Chapter.`,
   openGraph: {
     title: `${SERIES_NAME} | CHRIST University`,
     description: `Official website for ${SERIES_NAME}, the multi-society event series hosted by the IEEE CHRIST University Student Branch Chapter.`,
@@ -41,16 +39,28 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: `${SERIES_NAME} | CHRIST University`,
-    description: "Join the multi-society flagship event series by IEEE CHRIST University.",
+    description:
+      "Join the multi-society flagship event series by IEEE CHRIST University.",
   },
-  keywords: ["IEEE", "CHRIST University", "Engineering", "Technology", "Events", "Student Branch"],
+  keywords: [
+    "IEEE",
+    "CHRIST University",
+    "Engineering",
+    "Technology",
+    "Events",
+    "Student Branch",
+  ],
 };
 
 export const viewport: Viewport = {
   themeColor: "#ffffff",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html
       lang="en"
@@ -58,7 +68,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       className={`${bricolage.variable} ${geist.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col" suppressHydrationWarning>
-        <MotionProvider>{children}</MotionProvider>
+        {children}
       </body>
     </html>
   );

@@ -36,10 +36,12 @@ export default async function EventDetailPage({
   const event = await getEventBySlug(slug);
   if (!event) notFound();
 
-  const [content, related] = await Promise.all([
+  const [content, related, allEvents] = await Promise.all([
     getHomepageContent(),
     getRelatedEvents(event),
+    getEvents(),
   ]);
+  const index = allEvents.findIndex((item) => item.slug === event.slug) + 1;
   const links = getNavLinks("/events");
   const date = formatDateRange(event.startDate, event.endDate);
 
@@ -56,6 +58,8 @@ export default async function EventDetailPage({
           dateLabel={date.label}
           day={date.day}
           month={date.month}
+          index={index > 0 ? index : undefined}
+          category={event.category}
           societyNames={event.societies.map((society) => society.short)}
           statusLabel={eventStatusLabel(event.tentative)}
           tentative={event.tentative}

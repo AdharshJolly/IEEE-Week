@@ -1,22 +1,14 @@
 "use client";
 
-import { motion, useInView, useScroll, type MotionValue } from "framer-motion";
-import { createContext, type ReactNode, useContext, useRef } from "react";
-import {
-  activeBand,
-  distance,
-  duration,
-  ease,
-  scrollOffset,
-  viewport,
-} from "@/lib/motion/tokens";
-
-const ProgressContext = createContext<MotionValue<number> | null>(null);
+import { type ReactNode, useEffect, useRef, useState } from "react";
+import { gsap, useGSAP, withMotionPreference } from "@/lib/motion/gsap";
+import { Reveal } from "@/components/motion/Reveal";
+import { activeBand, ease, scrollRange } from "@/lib/motion/tokens";
 
 /**
  * One timeline row. Marks itself active while it crosses the middle of the
- * viewport (IntersectionObserver, no scroll handler) and exposes scroll
- * progress to its spine segment. Styling hooks off `data-active`.
+ * viewport (IntersectionObserver, no scroll handler). Styling hooks off
+ * `data-active`; its spine segment is `TimelineSpineFill`.
  */
 export function TimelineItem({
   children,
@@ -26,29 +18,57 @@ export function TimelineItem({
   className?: string;
 }) {
   const ref = useRef<HTMLLIElement>(null);
-  const active = useInView(ref, { margin: activeBand });
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: [...scrollOffset.rail],
-  });
+  const [active, setActive] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => setActive(entry.isIntersecting),
+      { rootMargin: activeBand },
+    );
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <ProgressContext.Provider value={scrollYProgress}>
-      <li ref={ref} data-active={active} className={className}>
-        {children}
-      </li>
-    </ProgressContext.Provider>
+    <li ref={ref} data-active={active} className={className}>
+      {children}
+    </li>
   );
 }
 
-/** Spine segment that fills as scroll passes the row. Hidden if reduced. */
+/**
+ * Spine segment that fills as scroll passes its `TimelineItem` row (scrubbed
+ * ScrollTrigger). Not animated under reduced motion; CSS hides it there.
+ */
 export function TimelineSpineFill({ className }: { className?: string }) {
-  const progress = useContext(ProgressContext);
-  if (!progress) return null;
+  const ref = useRef<HTMLSpanElement>(null);
+
+  useGSAP(() => {
+    const el = ref.current;
+    const row = el?.closest("li");
+    if (!el || !row) return;
+    withMotionPreference((reduced) => {
+      if (reduced) return;
+      gsap.to(el, {
+        scaleY: 1,
+        ease: ease.linear,
+        scrollTrigger: {
+          trigger: row,
+          start: scrollRange.rail.start,
+          end: scrollRange.rail.end,
+          scrub: true,
+        },
+      });
+    });
+  });
+
   return (
-    <motion.span
+    <span
+      ref={ref}
       className={className}
-      style={{ scaleY: progress, transformOrigin: "top" }}
+      style={{ transform: "scaleY(0)", transformOrigin: "top" }}
     />
   );
 }
@@ -63,16 +83,9 @@ export function TimelineSlide({
   className?: string;
   from: "left" | "right";
 }) {
-  const x = from === "left" ? -distance.md : distance.md;
   return (
-    <motion.div
-      className={className}
-      initial={{ opacity: 0, x }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={viewport}
-      transition={{ duration: duration.reveal, ease: ease.emphasis }}
-    >
+    <Reveal className={className} direction={from}>
       {children}
-    </motion.div>
+    </Reveal>
   );
 }

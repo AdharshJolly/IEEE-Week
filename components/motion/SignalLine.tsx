@@ -1,7 +1,13 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { ambient, duration, ease, viewport } from "@/lib/motion/tokens";
+import { useRef } from "react";
+import {
+  gsap,
+  onceInView,
+  useGSAP,
+  withMotionPreference,
+} from "@/lib/motion/gsap";
+import { ambient, duration, ease } from "@/lib/motion/tokens";
 import { cn } from "@/lib/utils";
 
 /*
@@ -23,50 +29,100 @@ function Trace({
   packet?: boolean;
   trigger?: "view" | "mount";
 }) {
-  const drive =
-    trigger === "mount"
-      ? { animate: "shown" as const }
-      : { whileInView: "shown" as const, viewport };
+  const group = useRef<SVGGElement>(null);
+
+  useGSAP(
+    () => {
+      const g = group.current;
+      if (!g) return;
+      const line = g.querySelector<SVGPathElement>("[data-trace-line]");
+      const dot = g.querySelector<SVGCircleElement>("[data-trace-node]");
+      const pulse = g.querySelector<SVGPathElement>("[data-trace-packet]");
+      if (!line || !dot) return;
+
+      withMotionPreference((reduced) => {
+        // Reduced motion: no drawing, the trace just fades in.
+        if (reduced) gsap.set(line, { strokeDashoffset: 0 });
+        const play = () => {
+          const tl = gsap.timeline({ delay });
+          tl.to(
+            line,
+            {
+              strokeDashoffset: 0,
+              opacity: 1,
+              duration: reduced ? duration.base : duration.trace,
+              ease: ease.emphasis,
+            },
+            0,
+          ).to(
+            dot,
+            {
+              opacity: 1,
+              duration: duration.base,
+              ease: ease.standard,
+            },
+            reduced ? 0 : duration.trace * 0.8,
+          );
+
+          // Ambient packet: the only continuous motion; off when reduced.
+          if (pulse && !reduced) {
+            const loop = gsap.timeline({
+              delay: delay + duration.trace + 1,
+              repeat: -1,
+              repeatDelay: ambient.packetIdle,
+            });
+            loop
+              .fromTo(
+                pulse,
+                { strokeDashoffset: 4 },
+                {
+                  strokeDashoffset: -100,
+                  duration: ambient.packetDuration,
+                  ease: ease.linear,
+                },
+                0,
+              )
+              .to(
+                pulse,
+                {
+                  keyframes: { opacity: [1, 1, 0], easeEach: ease.linear },
+                  duration: ambient.packetDuration,
+                  ease: ease.linear,
+                },
+                0,
+              );
+          }
+        };
+        if (trigger === "mount") play();
+        else onceInView(g, play);
+      });
+    },
+    { dependencies: [delay, trigger, packet] },
+  );
+
   return (
-    <motion.g initial="hidden" {...drive}>
-      <motion.path
+    <g ref={group}>
+      <path
+        data-trace-line=""
         d={d}
         fill="none"
         stroke="currentColor"
         strokeWidth={1.25}
         vectorEffect="non-scaling-stroke"
-        variants={{
-          hidden: { pathLength: 0, opacity: 0 },
-          shown: {
-            pathLength: 1,
-            opacity: 1,
-            transition: {
-              duration: duration.trace,
-              ease: ease.emphasis,
-              delay,
-            },
-          },
-        }}
+        pathLength={1}
+        style={{ strokeDasharray: "1 1", strokeDashoffset: 1, opacity: 0 }}
       />
-      <motion.circle
+      <circle
+        data-trace-node=""
         cx={node[0]}
         cy={node[1]}
         r={3.5}
         fill="currentColor"
-        variants={{
-          hidden: { opacity: 0 },
-          shown: {
-            opacity: 1,
-            transition: {
-              duration: duration.base,
-              ease: ease.standard,
-              delay: delay + duration.trace * 0.8,
-            },
-          },
-        }}
+        style={{ opacity: 0 }}
       />
       {packet && (
-        <motion.path
+        <path
+          data-trace-packet=""
           d={d}
           pathLength={100}
           fill="none"
@@ -76,18 +132,10 @@ function Trace({
           vectorEffect="non-scaling-stroke"
           strokeDasharray="4 96"
           className="signal-packet"
-          initial={{ strokeDashoffset: 4, opacity: 0 }}
-          animate={{ strokeDashoffset: -100, opacity: [0, 1, 1, 0] }}
-          transition={{
-            duration: ambient.packetDuration,
-            ease: "linear",
-            repeat: Infinity,
-            repeatDelay: ambient.packetIdle,
-            delay: delay + duration.trace + 1,
-          }}
+          style={{ strokeDashoffset: 4, opacity: 0 }}
         />
       )}
-    </motion.g>
+    </g>
   );
 }
 

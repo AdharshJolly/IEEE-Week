@@ -1,8 +1,8 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { type ReactNode, useEffect } from "react";
+import { type ReactNode, useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
+import { gsap, useGSAP } from "@/lib/motion/gsap";
 import { duration, ease } from "@/lib/motion/tokens";
 
 /**
@@ -19,26 +19,42 @@ export function PageTransition({ children }: { children: ReactNode }) {
     if (!window.location.hash) window.scrollTo(0, 0);
   }, [pathname]);
 
+  const signal = useRef<HTMLDivElement>(null);
+  const page = useRef<HTMLDivElement>(null);
+
+  useGSAP(() => {
+    gsap.to(page.current, {
+      opacity: 1,
+      duration: duration.page,
+      ease: ease.standard,
+    });
+    gsap.to(signal.current, {
+      scaleX: 1,
+      duration: duration.slow,
+      ease: ease.emphasis,
+    });
+    gsap.to(signal.current, {
+      opacity: 0,
+      duration: duration.slow,
+      delay: duration.slow * 0.6,
+    });
+  });
+
   return (
     <>
-      <motion.div
+      <div
+        ref={signal}
         aria-hidden="true"
         className="page-signal"
-        initial={{ scaleX: 0, opacity: 1 }}
-        animate={{ scaleX: 1, opacity: 0 }}
-        transition={{
-          scaleX: { duration: duration.slow, ease: ease.emphasis },
-          opacity: { duration: duration.slow, delay: duration.slow * 0.6 },
-        }}
+        style={{ transform: "scaleX(0)" }}
       />
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: duration.page, ease: ease.standard }}
+      <div
+        ref={page}
         className="flex min-h-full flex-1 flex-col"
+        style={{ opacity: 0 }}
       >
         {children}
-      </motion.div>
+      </div>
     </>
   );
 }

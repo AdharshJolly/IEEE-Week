@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useId, useRef, useState, type CSSProperties } from "react";
-import { Button } from "@/components/ui/Button";
+import { SpecularButton } from "@/components/ui/SpecularButton";
 import { cn } from "@/lib/utils";
 import type { NavCta, NavLink } from "./NavBar";
 
@@ -12,7 +12,8 @@ interface NavMobileMenuProps {
 }
 
 /**
- * Below `lg` the primary links collapse into this disclosure. Escape closes it
+ * Below `lg` the primary links collapse into this disclosure, a solid panel
+ * hung under the glass bar (nested backdrop filters would show nothing). Escape closes it
  * and returns focus to the toggle. The three-line icon morphs into an X with
  * transforms only.
  */
@@ -68,9 +69,9 @@ export function NavMobileMenu({ links, cta }: NavMobileMenuProps) {
       {open && (
         <div
           id={panelId}
-          className="rounded-card border-line bg-surface-elevated shadow-overlay absolute inset-x-0 top-full mt-2 border p-3"
+          className="border-line bg-surface-default rounded-card shadow-overlay absolute inset-x-0 top-full mt-2 border px-5 pt-1 pb-5"
         >
-          <ul className="m-0 mb-3 flex list-none flex-col p-0">
+          <ul className="m-0 mb-4 flex list-none flex-col p-0">
             {links.map((link, index) => (
               <li
                 key={link.href + link.label}
@@ -81,22 +82,28 @@ export function NavMobileMenu({ links, cta }: NavMobileMenuProps) {
                   href={link.href}
                   aria-current={link.active ? "page" : undefined}
                   onClick={() => setOpen(false)}
-                  className="type-title rounded-control text-content-secondary hover:bg-interactive-subtle-hover hover:text-content-primary aria-[current=page]:bg-surface-brand aria-[current=page]:text-content-brand flex h-14 items-center px-4"
+                  className="type-title border-line text-content-secondary hover:text-content-primary aria-[current=page]:text-content-brand flex h-14 items-center gap-4 border-b"
                 >
+                  <span
+                    aria-hidden="true"
+                    className="type-index text-content-brand"
+                  >
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
                   {link.label}
                 </Link>
               </li>
             ))}
           </ul>
           {cta && (
-            <Button
+            <SpecularButton
               href={cta.href}
               fullWidth
               arrow
               onClick={() => setOpen(false)}
             >
               {cta.label}
-            </Button>
+            </SpecularButton>
           )}
         </div>
       )}

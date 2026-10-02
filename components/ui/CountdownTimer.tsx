@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Clock } from "lucide-react";
+import { Counter, type CounterPlace } from "@/components/ui/Counter";
 import { cn } from "@/lib/utils";
 
 export interface CountdownTimerProps {
@@ -9,31 +9,35 @@ export interface CountdownTimerProps {
   className?: string;
 }
 
+const UNITS = ["days", "hours", "minutes", "seconds"] as const;
+/** Two digits minimum ("07"); more only when the value needs them (days). */
+const placesFor = (value: number): CounterPlace[] => {
+  const length = Math.max(2, String(value).length);
+  return Array.from({ length }, (_, i) => 10 ** (length - i - 1));
+};
+
+const LABELS = { days: "Days", hours: "Hrs", minutes: "Min", seconds: "Sec" };
+
+/**
+ * Flat readout: mono numerals separated by hairline rules. The empty state
+ * reserves the same height, so hydration never shifts layout.
+ */
 export function CountdownTimer({ targetDate, className }: CountdownTimerProps) {
-  const [timeLeft, setTimeLeft] = useState<{
-    days: number;
-    hours: number;
-    minutes: number;
-    seconds: number;
-  } | null>(null);
+  const [timeLeft, setTimeLeft] = useState<Record<
+    (typeof UNITS)[number],
+    number
+  > | null>(null);
 
   useEffect(() => {
     const target = new Date(targetDate).getTime();
 
     const update = () => {
-      const now = new Date().getTime();
-      const distance = target - now;
-
-      if (distance < 0) {
-        setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
-        return;
-      }
-
+      const distance = Math.max(0, target - Date.now());
       setTimeLeft({
-        days: Math.floor(distance / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-        minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-        seconds: Math.floor((distance % (1000 * 60)) / 1000),
+        days: Math.floor(distance / 86_400_000),
+        hours: Math.floor((distance % 86_400_000) / 3_600_000),
+        minutes: Math.floor((distance % 3_600_000) / 60_000),
+        seconds: Math.floor((distance % 60_000) / 1000),
       });
     };
 
@@ -42,49 +46,59 @@ export function CountdownTimer({ targetDate, className }: CountdownTimerProps) {
     return () => clearInterval(interval);
   }, [targetDate]);
 
-  if (!timeLeft) {
-    return <div className={cn("h-16 rounded-card bg-surface-muted animate-pulse", className)} />;
-  }
-
-  const isLive = 
-    timeLeft.days === 0 && timeLeft.hours === 0 && 
-    timeLeft.minutes === 0 && timeLeft.seconds === 0;
+  const isLive =
+    timeLeft !== null && UNITS.every((unit) => timeLeft[unit] === 0);
 
   if (isLive) {
     return (
-      <div className={cn("inline-flex items-center gap-2 rounded-full bg-interactive-primary px-4 py-2 text-content-on-brand shadow-glow", className)}>
-        <span className="relative flex h-3 w-3">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-white opacity-75"></span>
-          <span className="relative inline-flex rounded-full h-3 w-3 bg-white"></span>
-        </span>
-        <span className="font-semibold tracking-wide uppercase text-sm">Event is Live</span>
-      </div>
+      <p
+        className={cn(
+          "type-tech text-content-brand flex items-center gap-3",
+          className,
+        )}
+      >
+        <span
+          aria-hidden="true"
+          className="bg-interactive-primary size-2 rounded-full"
+        />
+        Event is live
+      </p>
     );
   }
 
   return (
-    <div className={cn("flex items-center gap-4 rounded-card bg-surface-elevated p-4 shadow-float border border-line", className)}>
-      <div className="flex items-center justify-center size-10 rounded-full bg-surface-brand text-content-brand shrink-0">
-        <Clock className="size-5" />
-      </div>
-      <div className="flex gap-4 sm:gap-6 type-meta tabular-nums">
-        <div className="flex flex-col items-center">
-          <span className="text-xl font-bold text-content-primary leading-none">{String(timeLeft.days).padStart(2, '0')}</span>
-          <span className="text-[0.65rem] uppercase tracking-wider text-content-secondary mt-1">Days</span>
+    <div
+      role="timer"
+      aria-label="Countdown to kickoff"
+      className={cn("grid min-h-14 grid-cols-4 divide-x", className)}
+    >
+      {UNITS.map((unit) => (
+        <div
+          key={unit}
+          className="border-line flex flex-col gap-1.5 px-4 first:pl-0"
+        >
+          <span
+            className={cn(
+              "font-display text-2xl leading-none font-bold sm:text-3xl",
+              timeLeft === null && "tabular-nums",
+            )}
+          >
+            {timeLeft ? (
+              <Counter
+                value={timeLeft[unit]}
+                places={placesFor(timeLeft[unit])}
+                label={String(timeLeft[unit]).padStart(2, "0")}
+                tone={unit === "seconds" ? "brand" : "primary"}
+              />
+            ) : (
+              "--"
+            )}
+          </span>
+          <span className="type-tech text-content-tertiary">
+            {LABELS[unit]}
+          </span>
         </div>
-        <div className="flex flex-col items-center">
-          <span className="text-xl font-bold text-content-primary leading-none">{String(timeLeft.hours).padStart(2, '0')}</span>
-          <span className="text-[0.65rem] uppercase tracking-wider text-content-secondary mt-1">Hours</span>
-        </div>
-        <div className="flex flex-col items-center">
-          <span className="text-xl font-bold text-content-primary leading-none">{String(timeLeft.minutes).padStart(2, '0')}</span>
-          <span className="text-[0.65rem] uppercase tracking-wider text-content-secondary mt-1">Mins</span>
-        </div>
-        <div className="flex flex-col items-center">
-          <span className="text-xl font-bold text-content-brand leading-none">{String(timeLeft.seconds).padStart(2, '0')}</span>
-          <span className="text-[0.65rem] uppercase tracking-wider text-content-brand mt-1">Secs</span>
-        </div>
-      </div>
+      ))}
     </div>
   );
 }

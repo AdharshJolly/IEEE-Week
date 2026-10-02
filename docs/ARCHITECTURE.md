@@ -25,7 +25,7 @@ library only when a concrete requirement can't be met without one.
 
 ```
 app/
-├── layout.tsx              # root layout, fonts, metadata, MotionProvider
+├── layout.tsx              # root layout, fonts, metadata
 ├── template.tsx            # per-navigation page transition
 ├── page.tsx                # homepage
 ├── globals.css             # design tokens + base styles + motion CSS
@@ -33,7 +33,7 @@ app/
 
 components/
 ├── ui/                      # generic primitives (Button, Card, Heading, Decor, ...)
-├── motion/                  # framer-motion primitives (see docs/MOTION.md)
+├── motion/                  # GSAP motion primitives (see docs/MOTION.md)
 ├── navigation/              # nav bar, footer, breadcrumbs, filters
 ├── events/                  # cards, timelines, event detail pieces, listing
 ├── sections/                # homepage/marketing sections
@@ -98,13 +98,87 @@ body | body-sm | label | eyebrow | caption | meta` in the components layer.
 - Radius: `tag` 4px, `control` 10px, `card` 18px, `panel` 32px, plus the
   signature `.shape-leaf` crop. `rounded-full` only for avatars and dots.
 - Elevation: `rest`, `raised`, `overlay`, `float`, all tinted with dark blue.
-- Motion: CSS tokens `--duration-*` / `--ease-*` plus the framer-motion
+- Motion: CSS tokens `--duration-*` / `--ease-*` plus the GSAP
   system documented in `docs/MOTION.md` (tokens in `lib/motion/tokens.ts`,
   primitives in `components/motion`). Only transform and opacity animate.
   Legacy CSS `.rise-in` / `.reveal` remain on some pages. Everything is
   disabled or reduced under `prefers-reduced-motion`.
 - Decoration: `<Decor variant>` (dots, grid, rings, fields), always masked,
   tinted from the palette and `aria-hidden`.
+
+### Visual language
+
+SIGNAL = movement / connection (SignalLine, rules that draw).
+GRID = engineering / structure (hairlines, indices, `SpecList`, 12-col layouts).
+PIXEL = discovery / transformation (`PixelReveal`, see `docs/MOTION.md`).
+BORDER = proximity / interaction / focus (`BorderGlow`, `components/effects`).
+COUNTER = quantitative information that changes (`Counter`, `components/ui`;
+see below).
+GLASS = depth / layered interface (`GlassSurface`, `components/effects`; the
+navbar is its canonical use, styles in `app/globals.css` `.glass-surface*`).
+
+Structure comes from type, whitespace and rules before cards or shadows.
+Editorial roles live in `app/globals.css`: `type-tech` (mono labels),
+`type-index` (01, 02), `type-numeral` (dates), `type-row-title`. Events are
+ruled rows (`EventRow`), societies an indexed rail, event detail a numbered
+document with a `SpecList` spec sheet.
+
+#### BorderGlow (BORDER primitive)
+
+`components/effects/BorderGlow.tsx`, adapted from the React Bits component
+(edge-proximity maths and layered cone masks kept; colours, radii, surfaces
+and timing are project tokens; the intro sweep runs on GSAP). CSS lives in
+`app/globals.css` (`.border-glow*`), defaults in `borderGlow` in
+`lib/motion/tokens.ts`.
+
+- **Purpose:** show that a single surface can be acted on, by lighting its
+  edge from the side the pointer approaches.
+- **Use it** on one featured or primary participation surface per view. Today:
+  the featured event card on `/events` (`FeaturedEventCard glow`), the
+  registration panel on an event page (only when a registration URL exists),
+  and the `/design-system` showcase.
+- **Do not use it** on lists of look-alike cards, every button, or the same
+  element as `PixelReveal`, the cursor spotlight or the magnetic offset. Never
+  as the only indicator of focus, selection or state.
+- **Relationship:** SIGNAL leads toward an action, GRID structures the surface,
+  PIXEL reveals a changed state, BORDER answers the pointer arriving.
+- **Reduced motion:** no glow layers and no sweep; the plain surface stays.
+- **Touch / coarse pointers:** glow layers are not rendered; pointer handling
+  ignores non-mouse input. Nothing depends on hover.
+- **Accessibility:** the effect is `aria-hidden` decoration. Interactive
+  children keep the standard focus ring. Contrast comes from the surface
+  tokens, not the glow.
+- **Layout:** the outer glow overflows by `glowRadius`; place it where the
+  parent has padding or does not clip.
+- **Card:** `tone="bare"` gives a transparent Card (no hover lift, no
+  spotlight) for use inside a BorderGlow.
+
+#### Counter (COUNTER primitive)
+
+`components/ui/Counter.tsx`, adapted from the React Bits Counter (per-place
+digit columns, spring-driven rolling, arbitrary `places`, decimals and the
+size/padding/gap/radius/colour/gradient props kept). It is rebuilt on GSAP
+(the spring runs on the GSAP ticker, constants in `counter` in
+`lib/motion/tokens.ts`), so no second animation library is added. Colours come
+from the `tone` and `surface` props, which map to semantic tokens.
+
+- **Purpose:** a data display primitive for a figure that changes while the
+  person watches, so the change reads as a change.
+- **Use it** where a quantity really changes: today the "Showing N of M events"
+  count in `EventListing` and the homepage `CountdownTimer` (padded
+  two-digit `places`; days grow as needed), and the `/design-system#counter` showcase.
+- **Do not use it** for static figures (the homepage event/society/day counts
+  are fixed per page load, so they stay plain `StatCard` text), decorative
+  count-ups, dates, codes or IDs, or on the same element as PixelReveal,
+  BorderGlow, spotlight or magnetic effects.
+- **Reduced motion:** no roll; the value resolves immediately to the same layout.
+- **Accessibility:** one visually-hidden text carries the value; the digits are
+  `aria-hidden`. To announce changes, put a polite live region on the parent
+  sentence (as `EventListing` does). Never duplicate the number elsewhere.
+- **Sizing:** inherits the surrounding font size; digits are `1ch` wide with
+  tabular numerals and heights are in `em`, so any value or digit count fits.
+- **Relationship:** GRID structures the surface it sits on, GLASS/surfaces sit
+  behind it; Counter adds no glow, border or other effect of its own.
 
 ## Component conventions
 

@@ -8,9 +8,15 @@ Chapter. See `docs/ARCHITECTURE.md` for the full technical write-up.
 
 ## Package manager
 
-- This project uses **Bun**. Never use `npm` or `npx`.
-- Use `bun install`, `bun add`, `bun run`, `bun test`, `bunx` (only if a
-  one-off binary is truly needed), etc.
+- This project uses **Bun** exclusively. **Never** use `npm`, `npx`, `yarn`,
+  or `pnpm` — for any command, in any context (installs, scripts, builds,
+  tests, one-off binaries, docs, examples, or suggestions to the user).
+- Equivalents: `npm install` → `bun install`, `npm install <pkg>` →
+  `bun add <pkg>`, `npm install -D <pkg>` → `bun add -d <pkg>`,
+  `npm run <script>` → `bun run <script>`, `npx <bin>` → `bunx <bin>`
+  (only if a one-off binary is truly needed), `npm test` → `bun test`.
+- When writing or updating docs, READMEs, comments or CI config, use Bun
+  commands only.
 - Do not introduce npm/yarn/pnpm lockfiles (`package-lock.json`,
   `yarn.lock`, `pnpm-lock.yaml`). Only `bun.lock` is committed.
 
@@ -34,7 +40,7 @@ instead of made-up values.
 ## Stack
 
 Next.js (App Router) + TypeScript + Tailwind CSS v4 + Zod + React Hook Form +
-Lucide React + MongoDB driver. No state-management library — don't add one
+Lucide React + GSAP (`gsap`, `@gsap/react`) + MongoDB driver. No state-management library — don't add one
 without a concrete, current requirement.
 
 ## Design authority
@@ -70,6 +76,10 @@ Motion follows `docs/MOTION.md`. Use the primitives in `components/motion`
 and the tokens in `lib/motion/tokens.ts`; never hardcode durations, easings,
 distances or springs, and never hardcode the event-series name (use
 `SERIES_NAME` from `lib/site/config.ts`). Honour reduced motion and touch.
+
+Visual language: SIGNAL = movement / connection, GRID = engineering /
+structure, PIXEL = discovery / transformation. Use `PixelReveal` only where
+real information changes state; never for decoration, never hover-only.
 
 ## Engineering rules
 

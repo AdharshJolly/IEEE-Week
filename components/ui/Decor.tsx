@@ -1,8 +1,8 @@
 "use client";
 
 import { type CSSProperties, useRef } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
-import { parallaxTravel, scrollOffset } from "@/lib/motion/tokens";
+import { gsap, useGSAP, withMotionPreference } from "@/lib/motion/gsap";
+import { ease, parallaxTravel, scrollRange } from "@/lib/motion/tokens";
 import { cn } from "@/lib/utils";
 
 export type DecorVariant =
@@ -36,23 +36,36 @@ export interface DecorProps {
  * masked so it fades out before it can compete with content.
  */
 export function Decor({ variant, at, className }: DecorProps) {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: [...scrollOffset.parallax],
+  const ref = useRef<HTMLDivElement>(null);
+
+  // Subtle scrubbed parallax; skipped under reduced motion.
+  useGSAP(() => {
+    const el = ref.current;
+    if (!el) return;
+    withMotionPreference((reduced) => {
+      if (reduced) return;
+      gsap.fromTo(
+        el,
+        { y: parallaxTravel[0] },
+        {
+          y: parallaxTravel[1],
+          ease: ease.linear,
+          scrollTrigger: {
+            trigger: el,
+            start: scrollRange.parallax.start,
+            end: scrollRange.parallax.end,
+            scrub: true,
+          },
+        },
+      );
+    });
   });
-  
-  // Subtle parallax effect
-  const y = useTransform(scrollYProgress, [0, 1], [...parallaxTravel]);
 
   return (
-    <motion.div
+    <div
       ref={ref}
       aria-hidden="true"
-      style={{
-        y,
-        ...(at ? { "--ring-at": at } as CSSProperties : {}),
-      }}
+      style={at ? ({ "--ring-at": at } as CSSProperties) : undefined}
       className={cn(
         "pointer-events-none absolute -z-10 motion-reduce:!transform-none",
         variantStyles[variant],

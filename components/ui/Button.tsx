@@ -19,10 +19,12 @@ interface ButtonStyleOptions {
   onDeep?: boolean;
   /** Nested trailing arrow well: the signature IEEE Week CTA. */
   arrow?: boolean;
+  /** Grow with the label (min height, wrapping) instead of a fixed height. */
+  fluid?: boolean;
 }
 
 const baseStyles =
-  "group/btn relative inline-flex select-none items-center justify-center whitespace-nowrap rounded-control border " +
+  "group/btn relative inline-flex select-none items-center justify-center rounded-control border " +
   "font-body font-semibold tracking-[-0.005em] transition-[background-color,color,border-color,transform,box-shadow] " +
   "duration-base ease-emphasis active:translate-y-px active:scale-[0.985] " +
   "disabled:pointer-events-none disabled:not-aria-busy:border-transparent disabled:not-aria-busy:bg-interactive-disabled " +
@@ -61,6 +63,12 @@ const sizeStyles: Record<ButtonSize, string> = {
   lg: "h-14 gap-3 px-7 text-[1.0625rem]",
 };
 
+const fluidSizeStyles: Record<ButtonSize, string> = {
+  sm: "min-h-10 gap-2 px-4 py-2 text-[0.875rem]",
+  md: "min-h-12 gap-2.5 px-6 py-2.5 text-[1rem]",
+  lg: "min-h-14 gap-3 px-7 py-3 text-[1.0625rem]",
+};
+
 // With the nested arrow well the right padding collapses so the well sits
 // flush inside the button with a concentric inset.
 const arrowPadding: Record<ButtonSize, string> = {
@@ -82,12 +90,15 @@ export function buttonStyles({
   fullWidth = false,
   onDeep = false,
   arrow = false,
+  fluid = false,
 }: ButtonStyleOptions = {}): string {
   return cn(
     baseStyles,
     // On navy, a variant's override replaces (never stacks on) its default.
     (onDeep && onDeepStyles[variant]) || variantStyles[variant],
-    sizeStyles[size],
+    fluid
+      ? cn(fluidSizeStyles[size], "text-center")
+      : cn("whitespace-nowrap", sizeStyles[size]),
     arrow && arrowPadding[size],
     fullWidth && "w-full",
   );
@@ -123,6 +134,42 @@ function Spinner() {
   );
 }
 
+/** Label plus the optional nested arrow well. Shared with SpecularButton. */
+export function ButtonContent({
+  arrow,
+  size,
+  hidden,
+  children,
+}: {
+  arrow?: boolean;
+  size: ButtonSize;
+  hidden?: boolean;
+  children?: ReactNode;
+}) {
+  return (
+    <span
+      className={cn(
+        "inline-flex items-center gap-[inherit]",
+        hidden && "invisible",
+      )}
+    >
+      {children}
+      {arrow && (
+        <span
+          className={cn(
+            "ml-1 flex shrink-0 items-center justify-center rounded-[calc(var(--radius-control)-6px)] bg-current/12",
+            "duration-base ease-emphasis transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-px group-hover/btn:scale-105",
+            wellSize[size],
+          )}
+          aria-hidden="true"
+        >
+          <ArrowUpRight className="size-4" strokeWidth={2} />
+        </span>
+      )}
+    </span>
+  );
+}
+
 /** Renders a `<button>`, or a Next `<Link>` when `href` is provided. */
 export function Button(props: ButtonProps) {
   const {
@@ -142,26 +189,9 @@ export function Button(props: ButtonProps) {
   );
   const content = (
     <>
-      <span
-        className={cn(
-          "inline-flex items-center gap-[inherit]",
-          loading && "invisible",
-        )}
-      >
+      <ButtonContent arrow={arrow} size={size} hidden={loading}>
         {children}
-        {arrow && (
-          <span
-            className={cn(
-              "ml-1 flex items-center justify-center rounded-[calc(var(--radius-control)-6px)] bg-current/12",
-              "duration-base ease-emphasis transition-transform group-hover/btn:translate-x-0.5 group-hover/btn:-translate-y-px group-hover/btn:scale-105",
-              wellSize[size],
-            )}
-            aria-hidden="true"
-          >
-            <ArrowUpRight className="size-4" strokeWidth={2} />
-          </span>
-        )}
-      </span>
+      </ButtonContent>
       {loading && <Spinner />}
     </>
   );

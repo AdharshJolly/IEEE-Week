@@ -42,9 +42,11 @@ export function EventsHero({
         </>
       }
     >
-      <div className="flex flex-col items-center justify-center text-center max-w-4xl mx-auto min-h-[30vh] lg:min-h-[40vh] pt-10">
-        <Eyebrow className="rise-in mb-6 justify-center before:hidden text-brand-cyan uppercase tracking-widest">{organization}</Eyebrow>
-        
+      <div className="mx-auto flex min-h-[30vh] max-w-4xl flex-col items-center justify-center pt-10 text-center lg:min-h-[40vh]">
+        <Eyebrow className="rise-in text-brand-cyan mb-6 justify-center tracking-widest uppercase before:hidden">
+          {organization}
+        </Eyebrow>
+
         <Heading
           as="h1"
           id="events-title"
@@ -53,7 +55,7 @@ export function EventsHero({
           style={{ "--i": 1 } as CSSProperties}
         >
           Explore the{" "}
-          <em className="text-transparent bg-clip-text bg-gradient-to-r from-brand-cyan to-brand-purple">
+          <em className="from-brand-cyan to-brand-purple bg-gradient-to-r bg-clip-text text-transparent">
             Tech Schedule
           </em>
         </Heading>
@@ -62,12 +64,13 @@ export function EventsHero({
           <Text
             visualStyle="body-lg"
             tone="secondary"
-            className="rise-in max-w-2xl text-balance mt-6"
+            className="rise-in mt-6 max-w-2xl text-balance"
             style={{ "--i": 2 } as CSSProperties}
           >
             {dateRange && (
               <>
-                Join us from <strong>{dateRange}</strong> for {year}&apos;s most anticipated tech events.{" "}
+                Join us from <strong>{dateRange}</strong> for {year}&apos;s most
+                anticipated tech events.{" "}
               </>
             )}
             {note}
@@ -80,10 +83,10 @@ export function EventsHero({
         >
           {stats.map((stat) => (
             <div key={stat.label} className="flex flex-col items-center gap-2">
-              <span className="font-display text-4xl sm:text-5xl font-bold text-content-primary tabular-nums tracking-tight leading-none">
+              <span className="font-display text-content-primary text-4xl leading-none font-bold tracking-tight tabular-nums sm:text-5xl">
                 {stat.value}
               </span>
-              <span className="type-meta text-content-tertiary uppercase tracking-widest">
+              <span className="type-meta text-content-tertiary tracking-widest uppercase">
                 {stat.label}
               </span>
             </div>

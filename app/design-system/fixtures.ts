@@ -19,15 +19,6 @@ export const statuses: RegistrationState[] = [
   "registered",
 ];
 
-export const navLinks = [
-  { label: "Foundations", href: "#foundations", active: true },
-  { label: "Events", href: "#events" },
-  { label: "Imagery", href: "#imagery" },
-  { label: "Community", href: "#community" },
-  { label: "States", href: "#states" },
-  { label: "System", href: "#system" },
-];
-
 // Stand-in photography for demonstrating image treatments only. The real
 // site needs commissioned event photography (see docs/ARCHITECTURE.md).
 export const standIn = {
@@ -72,7 +63,7 @@ export const events = [
 
 export const featuredEvent = {
   title: "Opening Keynote: Engineering the Next Decade",
-  society: "IEEE Student Branch",
+  society: "IEEE CHRIST University Student Branch Chapter",
   category: "talk" as const,
   description:
     "Kick off the week with a look at the ideas shaping computing, energy and robotics, followed by an open floor with every society lead.",
@@ -128,7 +119,7 @@ export const speakers = [
   {
     name: "Rohan Iyer",
     role: "Chair",
-    org: "IEEE Student Branch",
+    org: "IEEE CHRIST University Student Branch Chapter",
     topic: "Opening remarks",
     tone: "orange" as const,
   },
@@ -143,7 +134,7 @@ export const timelineDays: EventTimelineDay[] = [
         time: "09:30",
         endTime: "10:30",
         title: "Opening keynote",
-        society: "IEEE Student Branch",
+        society: "IEEE CHRIST University Student Branch Chapter",
         venue: "Main Auditorium",
         category: "talk",
         status: "open",

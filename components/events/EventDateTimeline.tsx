@@ -52,7 +52,7 @@ export function EventDateTimeline({ items, label }: EventDateTimelineProps) {
             from="left"
             className="col-start-2 row-start-1 flex items-baseline gap-2 pb-2 md:col-start-1 md:justify-end md:pb-0 md:text-right"
           >
-            <span className="font-display text-content-primary duration-base ease-standard text-4xl leading-none font-bold tracking-tight whitespace-nowrap tabular-nums transition-colors group-data-[active=true]/item:text-content-brand">
+            <span className="font-display text-content-primary duration-base ease-standard group-data-[active=true]/item:text-content-brand text-4xl leading-none font-bold tracking-tight whitespace-nowrap tabular-nums transition-colors">
               {item.day}
             </span>
             <span className="type-eyebrow text-content-brand">
@@ -64,30 +64,30 @@ export function EventDateTimeline({ items, label }: EventDateTimelineProps) {
             from="right"
             className="col-start-2 row-start-2 mb-8 flex md:col-start-3 md:row-start-1 md:-mt-2"
           >
-          <Link
-            href={item.href}
-            className="rounded-card hover:bg-surface-subtle duration-base ease-standard flex w-full flex-col gap-3 py-3 no-underline transition-colors md:px-4"
-          >
-            <span className="sr-only">{item.dateLabel}: </span>
-            <span className="flex items-start justify-between gap-4">
-              <span className="type-h3 text-content-primary text-balance">
-                {item.title}
+            <Link
+              href={item.href}
+              className="rounded-card hover:bg-surface-subtle duration-base ease-standard flex w-full flex-col gap-3 py-3 no-underline transition-colors md:px-4"
+            >
+              <span className="sr-only">{item.dateLabel}: </span>
+              <span className="flex items-start justify-between gap-4">
+                <span className="type-h3 text-content-primary text-balance">
+                  {item.title}
+                </span>
+                <ArrowUpRight
+                  className="text-content-brand duration-base ease-emphasis mt-1 size-5 shrink-0 transition-transform group-hover/item:translate-x-0.5 group-hover/item:-translate-y-0.5"
+                  strokeWidth={1.75}
+                  aria-hidden="true"
+                />
               </span>
-              <ArrowUpRight
-                className="text-content-brand duration-base ease-emphasis mt-1 size-5 shrink-0 transition-transform group-hover/item:translate-x-0.5 group-hover/item:-translate-y-0.5"
-                strokeWidth={1.75}
-                aria-hidden="true"
-              />
-            </span>
-            <span className="flex flex-wrap items-center gap-2">
-              {item.societies.map((code) => (
-                <Badge key={code} variant="brand">
-                  {code}
-                </Badge>
-              ))}
-              {item.tentative && <Badge variant="outline">Tentative</Badge>}
-            </span>
-          </Link>
+              <span className="flex flex-wrap items-center gap-2">
+                {item.societies.map((code) => (
+                  <Badge key={code} variant="brand">
+                    {code}
+                  </Badge>
+                ))}
+                {item.tentative && <Badge variant="outline">Tentative</Badge>}
+              </span>
+            </Link>
           </TimelineSlide>
         </TimelineItem>
       ))}

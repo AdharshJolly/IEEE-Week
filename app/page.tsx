@@ -80,6 +80,27 @@ export default async function Home() {
           firstEventDate={first ? `${first}T09:00:00Z` : undefined}
           eventCount={events.length}
           tentative={anyTentative}
+          reveal={
+            range && timelineItems[0]
+              ? {
+                  dateRange: range.label,
+                  stats: [
+                    { value: String(events.length), label: "Events" },
+                    {
+                      value: String(activeSocieties.length),
+                      label: "Societies",
+                    },
+                    { value: String(days.length), label: "Days" },
+                  ],
+                  opening: {
+                    title: timelineItems[0].title,
+                    href: timelineItems[0].href,
+                    dateLabel: timelineItems[0].dateLabel,
+                    societies: timelineItems[0].societies,
+                  },
+                }
+              : undefined
+          }
         />
         <WeekAtAGlance
           stats={[

@@ -1,7 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
-import { type ReactNode } from "react";
+import { type ReactNode, useRef } from "react";
+import { gsap, useGSAP, withMotionPreference } from "@/lib/motion/gsap";
 import { duration, ease } from "@/lib/motion/tokens";
 
 export interface MaskedTextProps {
@@ -25,20 +25,39 @@ export function MaskedText({
   className,
   delay = 0,
 }: MaskedTextProps) {
+  const ref = useRef<HTMLSpanElement>(null);
+
+  useGSAP(
+    () => {
+      const el = ref.current;
+      if (!el) return;
+      withMotionPreference((reduced) => {
+        if (!reduced) gsap.set(el, { y: "0.35em" });
+        gsap.to(el, {
+          clipPath: "inset(-0.1em -0.1em -0.25em -0.1em)",
+          y: 0,
+          opacity: 1,
+          duration: duration.reveal,
+          ease: ease.emphasis,
+          delay,
+        });
+      });
+    },
+    { dependencies: [delay] },
+  );
+
   return (
-    <motion.span
+    <span
+      ref={ref}
       data-masked=""
       className={className}
-      style={{ display: "block" }}
-      initial={{ clipPath: "inset(0 0 100% 0)", y: "0.35em", opacity: 0 }}
-      animate={{
-        clipPath: "inset(-0.1em -0.1em -0.25em -0.1em)",
-        y: 0,
-        opacity: 1,
+      style={{
+        display: "block",
+        opacity: 0,
+        clipPath: "inset(0 0 100% 0)",
       }}
-      transition={{ duration: duration.reveal, ease: ease.emphasis, delay }}
     >
       {children}
-    </motion.span>
+    </span>
   );
 }

@@ -4,7 +4,7 @@ import {
   Breadcrumbs,
   type BreadcrumbItem,
 } from "@/components/navigation/Breadcrumbs";
-import { Button } from "@/components/ui/Button";
+import { SpecularButton } from "@/components/ui/SpecularButton";
 import { Decor } from "@/components/ui/Decor";
 import { Heading } from "@/components/ui/Heading";
 import { Photo } from "@/components/ui/Photo";
@@ -115,15 +115,19 @@ export function EventHero({
               style={{ "--i": 3 } as CSSProperties}
             >
               {primaryAction && (
-                <Button href={primaryAction.href} size="lg" arrow>
+                <SpecularButton href={primaryAction.href} size="lg" arrow>
                   {primaryAction.label}
-                </Button>
+                </SpecularButton>
               )}
               {secondaryAction && (
-                <Button href={secondaryAction.href} size="lg" variant="outline">
+                <SpecularButton
+                  href={secondaryAction.href}
+                  size="lg"
+                  variant="secondary"
+                >
                   {secondaryAction.icon}
                   {secondaryAction.label}
-                </Button>
+                </SpecularButton>
               )}
             </div>
           )}

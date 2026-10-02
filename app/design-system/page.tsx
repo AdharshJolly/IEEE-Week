@@ -6,10 +6,15 @@ import { Decor } from "@/components/ui/Decor";
 import { Heading } from "@/components/ui/Heading";
 import { Section } from "@/components/ui/Section";
 import { Text } from "@/components/ui/Text";
-import { navLinks } from "./fixtures";
+import { getNavLinks } from "@/lib/site/navigation";
+import { BorderGlowSection } from "./_sections/BorderGlowSection";
+import { ButtonsSection } from "./_sections/ButtonsSection";
 import { ColorSection } from "./_sections/ColorSection";
 import { CommunitySection } from "./_sections/CommunitySection";
+import { CounterSection } from "./_sections/CounterSection";
+import { EditorialSection } from "./_sections/EditorialSection";
 import { EventsSection } from "./_sections/EventsSection";
+import { GlassSection } from "./_sections/GlassSection";
 import { HeroSection } from "./_sections/HeroSection";
 import { ImagerySection } from "./_sections/ImagerySection";
 import { ScheduleSection } from "./_sections/ScheduleSection";
@@ -20,8 +25,7 @@ import { TypographySection } from "./_sections/TypographySection";
 
 export const metadata: Metadata = {
   title: "Design System",
-  description:
-    `The ${SERIES_NAME} visual system: colour, type, imagery, components and states.`,
+  description: `The ${SERIES_NAME} visual system: colour, type, imagery, components and states.`,
 };
 
 /**
@@ -33,13 +37,18 @@ export default function DesignSystemPage() {
     <>
       <NavBar
         year="2026"
-        links={navLinks}
+        links={getNavLinks()}
         cta={{ label: "Register", href: "#events" }}
       />
       <main id="main-content" className="flex-1">
         <HeroSection />
         <ColorSection />
         <TypographySection />
+        <EditorialSection />
+        <BorderGlowSection />
+        <GlassSection />
+        <ButtonsSection />
+        <CounterSection />
         <EventsSection />
         <ImagerySection />
         <CommunitySection />
@@ -79,7 +88,8 @@ export default function DesignSystemPage() {
       >
         <div className="container-page border-line-on-deep flex flex-col gap-3 border-t py-8 sm:flex-row sm:items-center sm:justify-between">
           <p className="type-body-sm text-content-on-deep-secondary">
-            {SERIES_NAME} is organised by the university IEEE Student Branch.
+            {SERIES_NAME} is organised by the IEEE CHRIST University Student
+            Branch Chapter.
           </p>
           <Link
             href="/"

@@ -1,6 +1,6 @@
 import { CalendarDays } from "lucide-react";
 import { type CSSProperties } from "react";
-import { Button } from "@/components/ui/Button";
+import { SpecularButton } from "@/components/ui/SpecularButton";
 import { Decor } from "@/components/ui/Decor";
 import { Heading } from "@/components/ui/Heading";
 import { Photo } from "@/components/ui/Photo";
@@ -59,12 +59,12 @@ export function HeroSection() {
               className="rise-in flex flex-wrap items-center gap-3"
               style={{ "--i": 3 } as CSSProperties}
             >
-              <Button href="#events" size="lg" arrow>
+              <SpecularButton href="#events" size="lg" arrow>
                 Browse events
-              </Button>
-              <Button href="#foundations" size="lg" variant="outline">
+              </SpecularButton>
+              <SpecularButton href="#foundations" size="lg" variant="secondary">
                 See the foundations
-              </Button>
+              </SpecularButton>
             </div>
           </div>
 

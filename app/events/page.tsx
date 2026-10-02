@@ -22,8 +22,7 @@ import { SERIES_NAME } from "@/lib/site/config";
 
 export const metadata: Metadata = {
   title: "Events",
-  description:
-    `Every ${SERIES_NAME} event in date order, with the societies organising each one.`,
+  description: `Every ${SERIES_NAME} event in date order, with the societies organising each one.`,
 };
 
 export default async function EventsPage() {
@@ -51,6 +50,7 @@ export default async function EventsPage() {
       dateLabel: date.label,
       societyIds: event.societyIds,
       societyNames: event.societies.map((society) => society.short),
+      societyFullNames: event.societies.map((society) => society.name),
       statusLabel: eventStatusLabel(event.tentative),
       tentative: event.tentative,
       category: event.category,
@@ -59,8 +59,12 @@ export default async function EventsPage() {
   });
 
   // Find the event with the highest registrationsCount
-  const featured = [...events].sort((a, b) => (b.registrationsCount || 0) - (a.registrationsCount || 0))[0];
-  const featuredDate = featured ? formatDateRange(featured.startDate, featured.endDate) : null;
+  const featured = [...events].sort(
+    (a, b) => (b.registrationsCount || 0) - (a.registrationsCount || 0),
+  )[0];
+  const featuredDate = featured
+    ? formatDateRange(featured.startDate, featured.endDate)
+    : null;
   const links = getNavLinks("/events");
 
   // Filter out the featured event from the listing if we display it as featured
@@ -85,7 +89,7 @@ export default async function EventsPage() {
             { value: String(dayCount), label: "Days" },
           ]}
         />
-        
+
         {featured && featuredDate && (
           <Section spacing="md">
             <SectionHeading
@@ -101,6 +105,7 @@ export default async function EventsPage() {
               society={featured.societies.map((s) => s.short).join(" & ")}
               href={`/events/${featured.slug}`}
               layout="split"
+              glow
             />
           </Section>
         )}
@@ -111,7 +116,7 @@ export default async function EventsPage() {
             eyebrow="All events"
             title="Choose your track."
             description="Explore our massive schedule of events below."
-            className="mb-10 text-center mx-auto"
+            className="mb-10"
           />
           <EventListing items={remainingItems} />
         </Section>
@@ -120,7 +125,10 @@ export default async function EventsPage() {
           note={note}
           primary={
             featured
-              ? { label: "See featured event", href: `/events/${featured.slug}` }
+              ? {
+                  label: "See featured event",
+                  href: `/events/${featured.slug}`,
+                }
               : { label: "Back to home", href: "/" }
           }
           secondary={{ label: "Back to home", href: "/" }}

@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { type ReactNode } from "react";
-import { Button } from "@/components/ui/Button";
+import { GlassSurface } from "@/components/effects/GlassSurface";
+import { SpecularButton } from "@/components/ui/SpecularButton";
+import { SERIES_NAME } from "@/lib/site/config";
 import { cn } from "@/lib/utils";
 import { NavMobileMenu } from "./NavMobileMenu";
 
@@ -29,10 +31,12 @@ export interface NavBarProps {
 }
 
 /**
- * A floating, inset bar rather than an edge-to-edge strip: it detaches from
- * the viewport edge so hero art can run behind it. Server component; only the
- * mobile disclosure ships client JS. Pair with `id="main-content"` on <main>
- * to make the skip link work.
+ * A contained GLASS bar floating just below the viewport edge, so content
+ * scrolls behind it. GRID gives it structure: brand, a hairline divider, then
+ * the ruled link row. Server component; only the mobile disclosure ships
+ * client JS. Pair with `id="main-content"` on <main> for the skip link.
+ *
+ * The series name wraps rather than truncates, so any `SERIES_NAME` fits.
  */
 export function NavBar({
   links = [],
@@ -45,7 +49,7 @@ export function NavBar({
   return (
     <header
       className={cn(
-        "pointer-events-none z-40 px-3 pt-3 sm:px-5 sm:pt-4",
+        "pointer-events-none z-40 pt-3",
         sticky ? "sticky top-0" : "relative",
         className,
       )}
@@ -56,47 +60,56 @@ export function NavBar({
       >
         Skip to content
       </a>
-      <div className="rounded-card border-line bg-surface-default/88 shadow-raised pointer-events-auto relative mx-auto max-w-[calc(var(--page-max)+2*var(--gutter))] border backdrop-blur-xl">
-        <div className="flex h-16 items-center gap-6 px-4 sm:px-6">
-          <Link
-            href="/"
-            className="rounded-tag font-display text-content-primary flex shrink-0 items-baseline gap-1.5 text-[1.375rem] font-bold tracking-[-0.03em] no-underline"
-          >
-            <span className="text-content-brand">IEEE</span>
-            Week
-            {year && (
-              <small className="type-meta text-content-tertiary ml-1 hidden font-medium min-[26rem]:inline">
-                {year}
-              </small>
-            )}
-          </Link>
+      <div className="container-page">
+        <GlassSurface className="rounded-control pointer-events-auto">
+          <div className="flex min-h-14 items-center gap-4 py-1.5 pr-2 pl-4 lg:gap-6 lg:pr-3 lg:pl-5">
+            <Link
+              href="/"
+              className="rounded-tag font-display text-content-primary flex min-w-0 flex-1 flex-wrap items-baseline gap-x-2 text-[1.0625rem] leading-[1.1] font-bold tracking-[-0.03em] [overflow-wrap:anywhere] no-underline min-[26rem]:text-[1.125rem] lg:flex-none lg:text-[1.25rem]"
+            >
+              <span>{SERIES_NAME}</span>
+              {year && (
+                <small className="type-tech text-content-brand">{year}</small>
+              )}
+            </Link>
 
-          <nav aria-label="Primary" className="ml-auto hidden lg:block">
-            <ul className="m-0 flex list-none items-center gap-1 p-0">
-              {links.map((link) => (
-                <li key={link.href + link.label}>
-                  <Link
-                    href={link.href}
-                    aria-current={link.active ? "page" : undefined}
-                    className="type-body rounded-control text-content-secondary duration-fast ease-standard hover:bg-interactive-subtle-hover hover:text-content-primary aria-[current=page]:bg-surface-brand aria-[current=page]:text-content-brand flex h-10 items-center px-3.5 font-medium transition-colors aria-[current=page]:font-semibold"
-                  >
-                    {link.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
+            <span
+              aria-hidden="true"
+              className="bg-line my-2 hidden w-px self-stretch lg:block"
+            />
 
-          <div className="ml-auto flex items-center gap-2 lg:ml-0">
-            {actions}
-            {cta && (
-              <Button href={cta.href} size="sm" arrow className="max-lg:hidden">
-                {cta.label}
-              </Button>
-            )}
-            <NavMobileMenu links={links} cta={cta} />
+            <nav aria-label="Primary" className="hidden self-stretch lg:block">
+              <ul className="m-0 flex h-full list-none items-stretch gap-7 p-0">
+                {links.map((link) => (
+                  <li key={link.href + link.label} className="flex">
+                    <Link
+                      href={link.href}
+                      aria-current={link.active ? "page" : undefined}
+                      className="type-tech text-content-secondary duration-fast ease-standard hover:text-content-primary aria-[current=page]:text-content-brand after:bg-interactive-primary after:duration-base after:ease-emphasis relative flex items-center no-underline transition-colors after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 after:origin-left after:scale-x-0 after:transition-transform aria-[current=page]:after:scale-x-100"
+                    >
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+
+            <div className="flex shrink-0 items-center gap-2 lg:ml-auto">
+              {actions}
+              {cta && (
+                <SpecularButton
+                  href={cta.href}
+                  size="sm"
+                  arrow
+                  className="max-lg:hidden"
+                >
+                  {cta.label}
+                </SpecularButton>
+              )}
+              <NavMobileMenu links={links} cta={cta} />
+            </div>
           </div>
-        </div>
+        </GlassSurface>
       </div>
     </header>
   );

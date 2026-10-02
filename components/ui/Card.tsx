@@ -4,7 +4,14 @@ import { SpotlightLayer } from "@/components/motion/SpotlightLayer";
 import { cn } from "@/lib/utils";
 
 export type CardTone =
-  "default" | "subtle" | "brand" | "accent" | "special" | "solid" | "deep";
+  | "default"
+  | "subtle"
+  | "brand"
+  | "accent"
+  | "special"
+  | "solid"
+  | "deep"
+  | "bare";
 export type CardRadius = "card" | "panel";
 
 const toneStyles: Record<CardTone, string> = {
@@ -17,6 +24,9 @@ const toneStyles: Record<CardTone, string> = {
   solid:
     "border-line-subtle bg-surface-elevated text-content-primary shadow-rest",
   deep: "border-line-on-deep bg-surface-deep text-content-on-deep",
+  // No surface of its own: sits inside a BorderGlow, which owns the fill,
+  // border and hover feedback.
+  bare: "border-transparent bg-transparent text-content-primary",
 };
 
 interface CardStyleOptions {
@@ -35,6 +45,7 @@ export function cardStyles({
     radius === "panel" ? "rounded-panel" : "rounded-card",
     toneStyles[tone],
     interactive &&
+      tone !== "bare" &&
       "hover:-translate-y-0.5 hover:border-line-brand hover:shadow-raised motion-reduce:hover:translate-y-0",
   );
 }
@@ -69,7 +80,7 @@ export function Card({
           data-surface={surface}
           className={cn(classes, "no-underline")}
         >
-          <SpotlightLayer />
+          {tone !== "bare" && <SpotlightLayer />}
           {children}
         </Link>
       </Component>

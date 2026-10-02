@@ -35,15 +35,21 @@ export function SocietyCard({
       className={cn(
         "gap-5 p-6",
         isHorizontal ? "sm:flex-row sm:items-start sm:p-8" : "",
-        className
+        className,
       )}
     >
-      <div className={cn("flex items-start justify-between", isHorizontal ? "shrink-0" : "")}>
+      <div
+        className={cn(
+          "flex items-start justify-between",
+          isHorizontal ? "shrink-0" : "",
+        )}
+      >
         <span
           className={cn(
             "type-meta relative flex items-center justify-center font-semibold",
-            !logo && "rounded-control bg-surface-brand text-content-brand overflow-hidden",
-            isHorizontal ? "size-20 sm:size-24" : "size-16 sm:size-20"
+            !logo &&
+              "rounded-control bg-surface-brand text-content-brand overflow-hidden",
+            isHorizontal ? "size-20 sm:size-24" : "size-16 sm:size-20",
           )}
         >
           {logo ? (
@@ -56,9 +62,15 @@ export function SocietyCard({
               className="object-contain brightness-0"
             />
           ) : short ? (
-            <span className={isHorizontal ? "text-lg sm:text-xl" : ""}>{short}</span>
+            <span className={isHorizontal ? "text-lg sm:text-xl" : ""}>
+              {short}
+            </span>
           ) : (
-            <Users className={cn(isHorizontal ? "size-7" : "size-5")} strokeWidth={1.75} aria-hidden="true" />
+            <Users
+              className={cn(isHorizontal ? "size-7" : "size-5")}
+              strokeWidth={1.75}
+              aria-hidden="true"
+            />
           )}
         </span>
         {href && !isHorizontal && (
@@ -69,9 +81,16 @@ export function SocietyCard({
           />
         )}
       </div>
-      <div className={cn("flex flex-col gap-2", isHorizontal ? "flex-1 mt-1 sm:mt-0 sm:ml-2" : "")}>
+      <div
+        className={cn(
+          "flex flex-col gap-2",
+          isHorizontal ? "mt-1 flex-1 sm:mt-0 sm:ml-2" : "",
+        )}
+      >
         <div className="flex items-start justify-between gap-4">
-          <h3 className={cn("type-title", isHorizontal ? "text-xl" : "")}>{name}</h3>
+          <h3 className={cn("type-title", isHorizontal ? "text-xl" : "")}>
+            {name}
+          </h3>
           {href && isHorizontal && (
             <ArrowUpRight
               className="text-content-brand duration-base ease-emphasis size-5 shrink-0 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
@@ -81,7 +100,12 @@ export function SocietyCard({
           )}
         </div>
         {description && (
-          <p className={cn("text-content-secondary", isHorizontal ? "type-body" : "type-body-sm")}>
+          <p
+            className={cn(
+              "text-content-secondary",
+              isHorizontal ? "type-body" : "type-body-sm",
+            )}
+          >
             {description}
           </p>
         )}

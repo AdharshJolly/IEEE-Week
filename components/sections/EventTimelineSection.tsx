@@ -1,4 +1,4 @@
-import { Button } from "@/components/ui/Button";
+import { SpecularButton } from "@/components/ui/SpecularButton";
 import { Section } from "@/components/ui/Section";
 import {
   EventDateTimeline,
@@ -22,12 +22,15 @@ export function EventTimelineSection({ items }: EventTimelineSectionProps) {
             title="Upcoming highlights."
             description="A glimpse of what's happening. Explore the full schedule for more."
           />
-          <Button href="/events" variant="outline" arrow>
+          <SpecularButton href="/events" variant="secondary" arrow>
             See all events
-          </Button>
+          </SpecularButton>
         </div>
         <div className="lg:col-span-8">
-          <EventDateTimeline items={items} label={`Upcoming ${SERIES_NAME} events`} />
+          <EventDateTimeline
+            items={items}
+            label={`Upcoming ${SERIES_NAME} events`}
+          />
         </div>
       </div>
     </Section>

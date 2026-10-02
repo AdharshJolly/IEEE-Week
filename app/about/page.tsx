@@ -18,8 +18,7 @@ import { SERIES_NAME } from "@/lib/site/config";
 
 export const metadata: Metadata = {
   title: "About",
-  description:
-    `Learn about CHRIST University and the IEEE societies organizing ${SERIES_NAME}.`,
+  description: `Learn about CHRIST University and the IEEE societies organizing ${SERIES_NAME}.`,
 };
 
 export default async function AboutPage() {
@@ -46,7 +45,6 @@ export default async function AboutPage() {
         cta={{ label: "Explore Events", href: "/events" }}
       />
       <main id="main-content" className="flex-1">
-        
         <Section
           spacing="none"
           className="pb-section-sm pt-10 lg:pt-16"
@@ -62,7 +60,7 @@ export default async function AboutPage() {
             </>
           }
         >
-          <div className="flex flex-col gap-6 max-w-4xl">
+          <div className="flex max-w-4xl flex-col gap-6">
             <Eyebrow className="rise-in">About</Eyebrow>
             <Heading
               as="h1"
@@ -79,22 +77,26 @@ export default async function AboutPage() {
               className="rise-in max-w-2xl"
               style={{ "--i": 2 } as CSSProperties}
             >
-              We are driven by the pursuit of technological excellence and community 
-              collaboration. Discover the university and the societies that make this 
-              flagship event possible.
+              We are driven by the pursuit of technological excellence and
+              community collaboration. Discover the university and the societies
+              that make this flagship event possible.
             </Text>
           </div>
         </Section>
 
-        <Section spacing="md" id="university" aria-labelledby="university-title">
-          <div className="grid gap-12 lg:grid-cols-2 lg:gap-16 items-center">
+        <Section
+          spacing="md"
+          id="university"
+          aria-labelledby="university-title"
+        >
+          <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
             <div className="flex flex-col gap-6 lg:order-1">
-              <div className="relative h-20 w-48 -mb-4">
-                <Image 
-                  src="/images/CHRIST Uni.png" 
-                  alt="CHRIST University Logo" 
-                  fill 
-                  className="object-contain object-left brightness-0" 
+              <div className="relative -mb-4 h-20 w-48">
+                <Image
+                  src="/images/CHRIST Uni.png"
+                  alt="CHRIST University Logo"
+                  fill
+                  className="object-contain object-left brightness-0"
                   unoptimized
                 />
               </div>
@@ -104,39 +106,40 @@ export default async function AboutPage() {
                 title="CHRIST (Deemed to be University)"
               />
               <Text visualStyle="body-lg" tone="secondary">
-                Founded in 1969, CHRIST (Deemed to be University) is a premier 
-                educational institution in Bengaluru, India. Recognized for its 
-                academic excellence and vibrant campus life, it nurtures students 
-                to become visionary leaders and global citizens.
+                Founded in 1969, CHRIST (Deemed to be University) is a premier
+                educational institution in Bengaluru, India. Recognized for its
+                academic excellence and vibrant campus life, it nurtures
+                students to become visionary leaders and global citizens.
               </Text>
               <Text visualStyle="body" tone="secondary">
-                The School of Engineering and Technology provides a dynamic ecosystem 
-                for innovation, research, and practical application, empowering the 
-                next generation of technologists. It is the proud home to our active 
-                IEEE Student Branch.
+                The School of Engineering and Technology provides a dynamic
+                ecosystem for innovation, research, and practical application,
+                empowering the next generation of technologists. It is the proud
+                home to our active IEEE CHRIST University Student Branch
+                Chapter.
               </Text>
             </div>
-            
-            <div className="lg:order-2 relative isolate">
+
+            <div className="relative isolate lg:order-2">
               <Decor
                 variant="rings-cyan"
                 at="50% 50%"
-                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[130%] w-[130%] max-w-none pointer-events-none -z-10"
+                className="pointer-events-none absolute top-1/2 left-1/2 -z-10 h-[130%] w-[130%] max-w-none -translate-x-1/2 -translate-y-1/2"
               />
-              <Photo 
+              <Photo
                 src="https://images.unsplash.com/photo-1541339907198-e08756dedf3f?auto=format&fit=crop&q=80&w=1200"
                 alt="CHRIST University Campus"
-                aspect="4/3" 
-                shape="card" 
+                aspect="4/3"
+                shape="card"
                 tone="blue"
                 treatment="brand"
-                className="relative z-10 w-full shadow-float" 
+                className="shadow-float relative z-10 w-full"
               />
             </div>
           </div>
         </Section>
 
-        <SocietiesSection societies={societyItems} layout="list" />
+        <SocietiesSection societies={societyItems} />
 
         <FinalCta
           year={content.year}

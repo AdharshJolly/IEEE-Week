@@ -298,6 +298,28 @@ components:
     padding: 64px
 ---
 
+> **IEEE Week project note:** the visual language is GLASS (surfaces),
+> GRID (structure), SIGNAL (movement), PIXEL (transformation), BORDER
+> (proximity: `BorderGlow`), SPECULAR (action: `SpecularButton`) and COUNTER
+> (quantitative information: `Counter`), applied
+> with the IEEE palette and the tokens in `app/globals.css`.
+>
+> **Button hierarchy (IEEE Week):** `components/ui/SpecularButton.tsx` is the
+> canonical action button.
+>
+> - `primary`: filled, full specular edge highlight. Meaningful actions only
+>   (Register, Explore Events, View Event). One per view.
+> - `secondary`: outlined, restrained highlight. The supporting action.
+> - `tertiary` / `ghost`: quiet text button, no WebGL.
+> - Utility actions (toolbars, filters, Add to calendar, close, destructive
+>   confirmations) stay on `Button` / `IconButton`.
+>
+> The highlight is pointer-proximity only (no idle loop, no `autoAnimate`),
+> off under reduced motion, touch and when disabled, and is never combined
+> with BorderGlow, PixelReveal, spotlight or magnetic effects. Buttons size
+> to their label (min height, wrapping). Live reference: `/design-system#buttons`. Prefer type, whitespace, rules and alignment over cards
+> and shadows. See `docs/ARCHITECTURE.md` and `docs/MOTION.md`.
+
 ## Overview
 
 Claude.com is the warmest, most editorial interface in the AI-product category. The base atmosphere is a **tinted cream canvas** (`{colors.canvas}` — #faf9f5) — distinctly warm, deliberately not the cool gray-white that every other AI brand uses. Headlines run a **slab-serif display** ("Copernicus" / Tiempos Headline) at weight 400 with negative letter-spacing, paired with **StyreneB / Inter** body sans. The combination feels like a literary publication, not a SaaS marketing page.
